@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:027c59bbab381f4e4f148cd994b3abd9$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="drums" x="2" y="2" width="282" height="221"/>
+    <SubTexture name="guitar" x="279" y="448" width="140" height="221"/>
+    <SubTexture name="piano" x="2" y="225" width="275" height="222"/>
+    <SubTexture name="singing" x="279" y="225" width="141" height="221"/>
+    <SubTexture name="trumpet" x="286" y="2" width="189" height="221"/>
+    <SubTexture name="violin" x="2" y="671" width="131" height="221"/>
+</TextureAtlas>

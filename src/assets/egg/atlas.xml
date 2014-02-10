@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:8e1cb9b37593f4546661f93728382b84$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="egg1" x="218" y="720" width="220" height="227"/>
+    <SubTexture name="egg2" x="2" y="720" width="214" height="242"/>
+    <SubTexture name="egg3" x="374" y="2" width="333" height="259"/>
+    <SubTexture name="egg4" x="709" y="218" width="266" height="254"/>
+    <SubTexture name="egg5" x="2" y="264" width="246" height="248"/>
+    <SubTexture name="egg6" x="2" y="2" width="370" height="260"/>
+    <SubTexture name="egg7" x="709" y="2" width="287" height="214"/>
+    <SubTexture name="egg8" x="642" y="474" width="220" height="244"/>
+    <SubTexture name="egg9" x="374" y="263" width="266" height="216"/>
+</TextureAtlas>

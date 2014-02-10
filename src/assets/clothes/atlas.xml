@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:349cd2e57238206da26c5be8f4a03800$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="boots" x="726" y="2" width="270" height="221"/>
+    <SubTexture name="coat" x="373" y="2" width="351" height="321"/>
+    <SubTexture name="dress" x="726" y="225" width="246" height="302" frameX="-1" frameY="0" frameWidth="248" frameHeight="302"/>
+    <SubTexture name="gloves" x="562" y="733" width="216" height="201"/>
+    <SubTexture name="hat" x="780" y="733" width="214" height="223"/>
+    <SubTexture name="pants" x="318" y="629" width="242" height="321"/>
+    <SubTexture name="scarf" x="2" y="881" width="218" height="223"/>
+    <SubTexture name="shoes" x="2" y="2" width="369" height="327"/>
+    <SubTexture name="socks" x="2" y="654" width="239" height="225"/>
+    <SubTexture name="tshirt" x="373" y="325" width="321" height="302"/>
+    <SubTexture name="umbrella" x="2" y="331" width="314" height="321"/>
+    <SubTexture name="underwear" x="696" y="529" width="317" height="202"/>
+</TextureAtlas>

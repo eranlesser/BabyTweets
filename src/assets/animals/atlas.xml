@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:c411d1a931293b3b36d7ec17ff27c27e$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="ant" x="698" y="671" width="227" height="221"/>
+    <SubTexture name="bear" x="467" y="663" width="229" height="222" frameX="0" frameY="-4" frameWidth="229" frameHeight="226"/>
+    <SubTexture name="bee" x="827" y="894" width="151" height="221"/>
+    <SubTexture name="bfly" x="2" y="894" width="196" height="221"/>
+    <SubTexture name="camel" x="743" y="448" width="233" height="221"/>
+    <SubTexture name="cat" x="200" y="894" width="124" height="221"/>
+    <SubTexture name="chicken" x="829" y="225" width="189" height="221"/>
+    <SubTexture name="cow" x="289" y="2" width="280" height="221"/>
+    <SubTexture name="dog" x="424" y="887" width="200" height="221"/>
+    <SubTexture name="dolphin" x="213" y="671" width="209" height="221"/>
+    <SubTexture name="duck" x="2" y="2" width="285" height="221"/>
+    <SubTexture name="elephant" x="2" y="448" width="231" height="221"/>
+    <SubTexture name="horse" x="235" y="448" width="230" height="221"/>
+    <SubTexture name="lbug" x="853" y="2" width="167" height="221"/>
+    <SubTexture name="lbug2" x="571" y="2" width="280" height="213"/>
+    <SubTexture name="lion" x="626" y="894" width="199" height="221"/>
+    <SubTexture name="monkey" x="507" y="440" width="234" height="221"/>
+    <SubTexture name="snail" x="2" y="225" width="251" height="221"/>
+    <SubTexture name="spider" x="2" y="671" width="209" height="221"/>
+    <SubTexture name="trtl" x="571" y="217" width="256" height="221"/>
+    <SubTexture name="zebra" x="255" y="225" width="250" height="221"/>
+</TextureAtlas>

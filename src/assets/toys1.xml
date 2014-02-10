@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:26e86765de343d964ad23d58006e0b5c$ -->
+<TextureAtlas imagePath="toys1.png">
+    <SubTexture name="ball" x="104" y="794" width="150" height="150"/>
+    <SubTexture name="bluBln" x="391" y="881" width="59" height="101"/>
+    <SubTexture name="book" x="305" y="388" width="180" height="101"/>
+    <SubTexture name="cubes" x="288" y="491" width="221" height="166"/>
+    <SubTexture name="doll" x="305" y="178" width="180" height="208"/>
+    <SubTexture name="drawing" x="256" y="881" width="133" height="102"/>
+    <SubTexture name="fly_baloon" x="2" y="881" width="100" height="140"/>
+    <SubTexture name="greenBln" x="2" y="759" width="58" height="101"/>
+    <SubTexture name="horse" x="305" y="2" width="190" height="174"/>
+    <SubTexture name="orangeBln" x="2" y="656" width="58" height="101"/>
+    <SubTexture name="plane" x="104" y="691" width="167" height="101"/>
+    <SubTexture name="redBln" x="227" y="588" width="59" height="101"/>
+    <SubTexture name="tedy" x="288" y="659" width="218" height="220"/>
+    <SubTexture name="train" x="2" y="260" width="301" height="223"/>
+    <SubTexture name="train2" x="2" y="485" width="223" height="169"/>
+    <SubTexture name="trolly" x="2" y="2" width="301" height="256"/>
+    <SubTexture name="turkuizeBln" x="227" y="485" width="59" height="101"/>
+    <SubTexture name="yellowBln" x="452" y="881" width="58" height="101"/>
+</TextureAtlas>

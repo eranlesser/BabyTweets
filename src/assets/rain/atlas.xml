@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:0f64ac14a7557155e805b149a4d881c5$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="flower1" x="591" y="2" width="259" height="151"/>
+    <SubTexture name="flower2" x="501" y="536" width="219" height="145"/>
+    <SubTexture name="flower3" x="298" y="536" width="201" height="156"/>
+    <SubTexture name="flower4" x="298" y="311" width="232" height="223"/>
+    <SubTexture name="flower5" x="293" y="720" width="229" height="288"/>
+    <SubTexture name="flower6" x="2" y="720" width="289" height="299"/>
+    <SubTexture name="flower7" x="291" y="2" width="298" height="307"/>
+    <SubTexture name="flower8" x="2" y="369" width="294" height="349"/>
+    <SubTexture name="flower9" x="2" y="2" width="287" height="365"/>
+</TextureAtlas>

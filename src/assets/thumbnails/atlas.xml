@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:9e033a1eda151031f7ce63e8d6177c69$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="bathroomTmb" x="154" y="239" width="150" height="113"/>
+    <SubTexture name="bluBln" x="245" y="354" width="59" height="101"/>
+    <SubTexture name="cubesTmb" x="333" y="2" width="151" height="114"/>
+    <SubTexture name="eggTmb" x="2" y="105" width="156" height="110"/>
+    <SubTexture name="elephantTmb" x="2" y="332" width="125" height="120"/>
+    <SubTexture name="flowerTmb" x="306" y="365" width="94" height="120"/>
+    <SubTexture name="girlFaceTmb" x="129" y="354" width="114" height="112" frameX="-23" frameY="-4" frameWidth="160" frameHeight="120"/>
+    <SubTexture name="lbugTmb" x="402" y="375" width="92" height="121"/>
+    <SubTexture name="outdoors2Tmb" x="2" y="217" width="150" height="113"/>
+    <SubTexture name="outdoorsTmb" x="160" y="124" width="150" height="113"/>
+    <SubTexture name="plane" x="2" y="2" width="167" height="101"/>
+    <SubTexture name="shoesTmb" x="333" y="118" width="150" height="133"/>
+    <SubTexture name="singingTmb" x="427" y="253" width="77" height="120"/>
+    <SubTexture name="tomato" x="306" y="253" width="119" height="110"/>
+    <SubTexture name="toot" x="2" y="454" width="85" height="121"/>
+    <SubTexture name="transportationTmb" x="171" y="2" width="160" height="120"/>
+</TextureAtlas>
