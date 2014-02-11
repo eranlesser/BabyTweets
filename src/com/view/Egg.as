@@ -34,6 +34,11 @@ package com.view
 		private var _knockSound:Sound = new Sound(new URLRequest("../../../../assets/sounds/egg/knock.mp3"));
 		public function Egg()
 		{
+			
+		}
+		
+		override protected function init():void{
+			super.init();
 			_atlas = Assets.getAtlas("egg");
 			_egg = (new Image(_atlas.getTexture("egg1")));
 			addChild(_egg);
@@ -43,24 +48,25 @@ package com.view
 			_vc.push(_atlas.getTexture("egg2"));
 			_vc.push(_atlas.getTexture("egg3"));
 			_vc.push(_atlas.getTexture("egg6"));
-			enabled=true;
+			isEnabled=true;
 			_counter.count(4);
 			_counter.done.add(onCounter);
+			super.addHomeBtn();
 		}
 		
 		private function onKnock(e:TouchEvent):void{
-			if(!enabled||_categorySoundPlaying){
+			if(!isEnabled||_categorySoundPlaying){
 				return;
 			}
 			if(e.getTouch(stage) &&e.getTouch(stage).phase == TouchPhase.BEGAN){
 				_counter.progress();
 				_knockSound.play();
-				enabled = false;
+				isEnabled = false;
 				_egg.scaleX=1.1;
 				_egg.scaleY=1.1;
 				_counter.tick.addOnce(function():void{
 					if(!_counter.isDone){
-						enabled=true
+						isEnabled=true
 						_egg.scaleX=1;
 						_egg.scaleY=1;
 					}
@@ -82,16 +88,13 @@ package com.view
 			);
 			var delayer:DelayedCall =Starling.juggler.delayCall(progress,1.2);
 			delayer.repeatCount=3;
-			enabled=false;
+			isEnabled=false;
 		}
 		
 		override public function destroy():void{
 			if(_egg.parent){
 				_egg.removeFromParent(true);
 			}
-		}
-		
-		override protected function playWhoIsSound():void{//don't show bird note
 		}
 		
 		private function progress():void{
@@ -104,7 +107,7 @@ package com.view
 			if(_curFrame == 3){
 				Starling.juggler.delayCall(function():void{dispatchDone()},3);
 				closeCurtains();
-				enabled=false;
+				isEnabled=false;
 			}
 		}
 		

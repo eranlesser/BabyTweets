@@ -147,7 +147,7 @@ package com.view
 			//tmr.start();
 		}
 		
-		override public function set model(screenModel:ScreenModel):void{
+		public function set model(screenModel:ScreenModel):void{
 			init();
 			_menu.model = screenModel;
 		}

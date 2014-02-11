@@ -1,5 +1,6 @@
 package
 {
+	import com.Assets;
 	import com.Dimentions;
 	import com.controller.Progressor;
 	import com.sticksports.nativeExtensions.flurry.Flurry;
@@ -23,6 +24,7 @@ package
 		
 		private function init(e:Event):void
 		{
+			Assets.load();
 			_logo = addChild(new Image(Texture.fromBitmap(new logo()))) as Image;
 			Starling.juggler.delayCall(start,4);
 			_logo.x= (Dimentions.WIDTH-_logo.width)/2;

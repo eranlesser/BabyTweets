@@ -49,7 +49,7 @@ package
 			Starling.multitouchEnabled = true;
 			//Starling.handleLostContext = true;
 			_starling = new Starling(FirstWordsApp,stage,viewPort);
-			_starling.showStats=true;
+			//_starling.showStats=true;
 			_starling.start();
 			Starling.current.nativeStage.align = StageAlign.TOP_LEFT;
 			Starling.current.nativeStage.scaleMode = StageScaleMode.NO_SCALE;

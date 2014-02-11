@@ -16,7 +16,7 @@ package com.view
 	import starling.events.Event;
 	import starling.textures.Texture;
 
-	public class Baloons extends AbstractScreen
+	public class Baloons extends IsScreen
 	{
 		private var _ballons:Vector.<ColoredBaloon>;
 		private var _playIndex:uint=0;
@@ -26,14 +26,9 @@ package com.view
 		private static const STEP_TIME : Number = 0.01;
 		[Embed(source="../../assets/balloons/baloonsBg.jpg")]
 		private var bg : Class;
-		public function Baloons()
+		public function Baloons(mdl:ScreenModel)
 		{
-			super();
-			_screenLayer.addChild(new Image(Texture.fromBitmap(new bg())));
-			_ballons = new Vector.<ColoredBaloon>();
-			createSpace();
-			createFloor();
-			init();
+			super(mdl);
 		}
 		
 		private function createSpace():void
@@ -76,7 +71,12 @@ package com.view
 		
 		
 		
-		private function init():void{
+		override protected function init():void{
+			super.init();
+			_screenLayer.addChild(new Image(Texture.fromBitmap(new bg())));
+			_ballons = new Vector.<ColoredBaloon>();
+			createSpace();
+			createFloor();
 			var baloon:ColoredBaloon = new ColoredBaloon("red",_space,new CbType(),300,300);
 			addChild(baloon.material);
 			var blubaloon:ColoredBaloon = new ColoredBaloon("blu",_space,new CbType(),600,300);
@@ -101,12 +101,9 @@ package com.view
 			_ballons.push(greenbaloon);
 			_ballons.push(yellowbaloon);
 			
-			_ballons[0].isWho = true;		}
+			_ballons[0].isWho = true;		
 		
-		override public function set model(screenModel:ScreenModel):void{
-			super.model = screenModel;
-			enabled = true;
-		}
+			}
 		
 		
 		private function onLast():void{
@@ -197,7 +194,7 @@ class ColoredBaloon extends PlayItem{
 	}
 	
 	public function playQuestion():void{
-		if(_material.parent is Baloons && Baloons(_material.parent).enabled){
+		if(_material.parent is Baloons && Baloons(_material.parent).isEnabled){
 			Starling.juggler.delayCall(_qSound.play,1);
 			enable.dispatch(false)
 			Starling.juggler.delayCall(function():void{enable.dispatch(true)},2);
@@ -205,7 +202,7 @@ class ColoredBaloon extends PlayItem{
 	}
 	
 	private function playAnswer():void{
-		if(_material.parent is Baloons && Baloons(_material.parent).enabled){
+		if(_material.parent is Baloons && Baloons(_material.parent).isEnabled){
 			_aSound.play();
 			enable.dispatch(false)
 			Starling.juggler.delayCall(function():void{enable.dispatch(true)},1.2);
@@ -288,7 +285,7 @@ class ColoredBaloon extends PlayItem{
 	
 	private function onTouch(e:TouchEvent):void{
 		if(e.getTouch(_material.stage).phase == TouchPhase.BEGAN){
-			if(_material.parent is Baloons && Baloons(_material.parent).enabled){
+			if(_material.parent is Baloons && Baloons(_material.parent).isEnabled){
 				if(!_isWho ){
 					playAnswer();
 					return;

@@ -1,16 +1,13 @@
 package com.view
 {
-	import com.Assets;
 	import com.Dimentions;
 	import com.model.ScreensModel;
 	import com.model.Session;
 	import com.model.rawData.Texts;
 	import com.utils.filters.GlowFilter;
-	import com.view.components.Clouds;
 	import com.view.components.FlagsMenu;
 	
 	import flash.system.Capabilities;
-	import flash.text.AutoCapitalize;
 	import flash.text.TextFieldAutoSize;
 	
 	import org.osflash.signals.Signal;
@@ -22,7 +19,6 @@ package com.view
 	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.textures.Texture;
-	import starling.utils.HAlign;
 	
 	public class HomeScreen extends AbstractScreen
 	{
@@ -39,9 +35,20 @@ package com.view
 		private var _menuText:TextField;
 		private var _titleText:TextField;
 		private var _texts:Texts;
-		public function HomeScreen(screens:ScreensModel)
+		public var ready:Signal = new Signal();
+		
+		public function HomeScreen(screenModel:ScreensModel)
 		{
-			Assets.load();
+//			var playText:TextField = new TextField(playBut.width,32,_texts.getText("play"),"Verdana",20,0x002661);
+//			addChild(playText);
+//			playText.filter = new GlowFilter(0xFFFFFF);
+//			playText.hAlign = HAlign.CENTER;
+//			playText.x=playBut.x+12;
+//			playText.y=playBut.y+playBut.height-5;
+		}
+		
+		override protected function init():void{
+			super.init();
 			_texts = new Texts();
 			var homeBg:Image = new Image(Texture.fromBitmap(new home()))
 			_screenLayer.addChild(homeBg);
@@ -81,13 +88,7 @@ package com.view
 			playBut.y=168;
 			playBut.addEventListener(Event.TRIGGERED,function():void{gotoSignal.dispatch(Session.currentScreen)});
 			this.addEventListener(TouchEvent.TOUCH,onTouch);
-			
-			var playText:TextField = new TextField(playBut.width,32,_texts.getText("play"),"Verdana",20,0x002661);
-			addChild(playText);
-			playText.filter = new GlowFilter(0xFFFFFF);
-			playText.hAlign = HAlign.CENTER;
-			playText.x=playBut.x+12;
-			playText.y=playBut.y+playBut.height-5;
+			ready.dispatch();
 		}
 		
 		private function onTouch(t:TouchEvent):void{
@@ -101,16 +102,6 @@ package com.view
 		
 		private function openMenu():void{
 			gotoSignal.dispatch(-1);
-		}
-		
-		override protected function addNavigation():void{
-			
-		}
-		
-		
-		
-		override public function destroy():void{
-			//_clouds.stop();
 		}
 	}
 }

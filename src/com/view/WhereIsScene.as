@@ -22,25 +22,24 @@ package com.view
 	import starling.events.TouchPhase;
 	import starling.textures.Texture;
 
-	public class WhereIsScene extends AbstractScreen
+	public class WhereIsScene extends IsScreen
 	{
 		private var _whereIsBtns:Vector.<Button>;
-		public function WhereIsScene()
+		public function WhereIsScene(mdl:ScreenModel)
 		{
+			super(mdl);
 			_whereIsBtns = new Vector.<Button>();
 		}
 		private var _clics:uint=0;
 		private var _resoult:String="";
-		private var _x:uint;
-		private var _y:uint;
 		private var _touchPoint:Point;
-		
-		override public function set model(screenModel:ScreenModel):void{
-			var bg:Image = new Image(Texture.fromBitmap(Assets.getImage(screenModel.backGround)));
+
+		override protected function init():void{
+			super.init();
+			var bg:Image = new Image(Texture.fromBitmap(Assets.getImage(_model.backGround)));
 			_screenLayer.addChild(bg);
 			bg.x = (Dimentions.WIDTH-bg.width)/2;
 			bg.y = (Dimentions.HEIGHT-bg.height)/2;
-			super.model = screenModel;
 			for(var i:uint=0;i<_model.numItems;i++){
 				addItem(_model.distractor);
 			}
@@ -50,17 +49,17 @@ package com.view
 				
 				if(touch && (touch.phase == TouchPhase.BEGAN)){
 					_clics++;
-					trace(_clics)
 					_touchPoint = new Point(touch.globalX,touch.globalY);
+					var x:int;
+					var y:int;
 					if(_clics==1){
-						_x=touch.globalX;
-						_y=touch.globalY;
-						_resoult = _resoult + _x.toString()+","+_y.toString()+",";
+						x=touch.globalX;
+						y=touch.globalY;
+						_resoult = _resoult + x.toString()+","+y.toString()+",";
 					}else if(_clics==2){
-						_resoult = _resoult + Math.round(touch.globalX-_x).toString()+",";
+						_resoult = _resoult + Math.round(touch.globalX-x).toString()+",";
 					}else{
-						_resoult = _resoult + Math.round(touch.globalY-_y).toString();
-						trace(_resoult);
+						_resoult = _resoult + Math.round(touch.globalY-y).toString();
 						_clics=0;
 						_resoult="";
 					}

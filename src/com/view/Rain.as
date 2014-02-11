@@ -1,6 +1,7 @@
 package com.view
 {
 	import com.Dimentions;
+	import com.model.ScreenModel;
 	import com.view.components.Counter;
 	import com.view.utils.SoundPlayer;
 	
@@ -53,18 +54,18 @@ package com.view
 			_seed.x = (Dimentions.WIDTH-_seed.width)/2;
 			_seed.y=Dimentions.HEIGHT-_seed.height-20;
 			_rain.visible=false;
-			enabled=true;
+			isEnabled=true;
 		}
 		
 		private function onCloudTouch(e:TouchEvent):void{
-			if(!enabled||_categorySoundPlaying){
+			if(!isEnabled||_categorySoundPlaying){
 				return;
 			}
 			if(e.getTouch(stage) &&e.getTouch(stage).phase == TouchPhase.BEGAN){
 				var sound:Sound = new Sound(new URLRequest("../../../assets/sounds/heb/rain.mp3"));
 				_chnl = sound.play();
 				_rain.visible = true;
-				 enabled=false;
+				 isEnabled=false;
 				 Starling.juggler.delayCall(progress,1);
 				//progress();
 			}
@@ -74,9 +75,6 @@ package com.view
 		private function onTimer():void{
 			progress();
 		}
-		override protected function playWhoIsSound():void{//don't show bird note
-		}
-		
 		
 		private function progress():void{
 			if(_index==10){
@@ -89,7 +87,7 @@ package com.view
 					Starling.juggler.delayCall(dispatchDone,2.5);
 				},1);
 				closeCurtains();
-				enabled=false;
+				isEnabled=false;
 				if(_chnl){
 					_chnl.stop();
 				}
@@ -111,7 +109,7 @@ package com.view
 			}
 			_seed.x = (Dimentions.WIDTH-_seed.width)/2;
 			_seed.y=Dimentions.HEIGHT-_seed.height-20;
-			enabled=true;
+			isEnabled=true;
 		}
 		
 		

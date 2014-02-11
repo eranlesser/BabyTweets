@@ -6,10 +6,8 @@ package com.model.rawData
 	<whereIs>
 		<screens>
 			{Toys.data}
-			{PlayRoomData.data}
 			{OutDoors1.data}
 			{EggData.data}
-			{PlayRoomData.data}
 			{Clothes.data}
 			{BaloonsData.data}
 			{BodyPartsScene2.data}
@@ -21,7 +19,6 @@ package com.model.rawData
 			{Transportation.data}
 			{RainData.data}
 			{BathRoom.data}
-			{PlayRoomData.data}
 			{Musicians.data}
 			{OutDoors2.data}
 			{Vegies.data}

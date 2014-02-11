@@ -5,10 +5,12 @@ package com.controller
 	import com.model.Session;
 	import com.model.rawData.WhereIsData;
 	import com.sticksports.nativeExtensions.flurry.Flurry;
+	import com.view.AbstractScreen;
 	import com.view.Baloons;
 	import com.view.Egg;
 	import com.view.HomeScreen;
 	import com.view.IScreen;
+	import com.view.IsScreen;
 	import com.view.PlayRoom;
 	import com.view.Rain;
 	import com.view.WhereIsScene;
@@ -24,7 +26,7 @@ package com.controller
 		private var _app:					Sprite;
 		private var _screens:				ScreensModel;
 		private var _homeScreen:			HomeScreen;
-		private var _currentScreen:		    IScreen;
+		private var _currentScreen:		    AbstractScreen;
 		private var _playRoom:				PlayRoom;
 		private var _configScr:ConfigurationScreen;
 		public function Progressor(app:Sprite)
@@ -32,7 +34,7 @@ package com.controller
 			_app = app;
 			_screens = new ScreensModel(WhereIsData.data);
 			_homeScreen = new HomeScreen(_screens);
-			initConfigScreen();
+			_homeScreen.ready.add(initConfigScreen);
 		}
 		
 		private function initConfigScreen():void{
@@ -102,7 +104,7 @@ package com.controller
 			//Flurry.getInstance().logEvent("navigate home");
 		}
 		
-		private function removeScreen(screen:IScreen):void{
+		private function removeScreen(screen:AbstractScreen):void{
 			screen.done.remove(goNext);
 			screen.goHome.remove(goHome);
 			screen.destroy();
@@ -113,14 +115,14 @@ package com.controller
 			}
 		}
 		
-		private function addScreen(model:ScreenModel):IScreen{
-			var screen:IScreen;
+		private function addScreen(model:ScreenModel):AbstractScreen{
+			var screen:AbstractScreen;
 			switch(model.type){
 				case "whereIsScreen":
-					screen = new WhereIsScreen();
+					screen = new WhereIsScreen(model);
 					break;
 				case "whereScene":
-					screen = new WhereIsScene();
+					screen = new WhereIsScene(model);
 					break;
 				case "egg":
 					screen = new Egg();
@@ -129,11 +131,12 @@ package com.controller
 					screen = new Rain();
 					break;
 				case "baloons":
-					screen = new Baloons();
+					screen = new Baloons(model);
 					break;
 				case "playRoom":
 					if(!_playRoom){
 						_playRoom = new PlayRoom();
+						_playRoom.model=model;
 					}
 					_playRoom.visible = true;
 					screen = _playRoom;
@@ -141,7 +144,6 @@ package com.controller
 			}
 			screen.done.add(goNext);
 			screen.goHome.add(goHome);
-			screen.model = model;
 			_app.addChild(screen as DisplayObject);
 			if(screen == _playRoom){
 				_playRoom.visible = true;

@@ -12,10 +12,12 @@ package com.view
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	
+	import starling.display.Button;
+	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	
-	public class WhereIsScreen extends AbstractScreen{
+	public class WhereIsScreen extends IsScreen{
 		
 		
 		private var _layout:			Layout;
@@ -23,14 +25,14 @@ package com.view
 		//private var _clouds:			Clouds;
 		private var _birds:				Tweet;
 		
-		public function WhereIsScreen()
+		public function WhereIsScreen(screenModel:ScreenModel)
 		{
-			super();
-			init();
+			super(screenModel);
 		}
 		
-		private function init():void{
-			_layout = new ThreeLayout(this.screenLayer);
+		override protected function init():void{
+			super.init();
+			_layout = new ThreeLayout(screenLayer);
 			//_clouds = new Clouds()
 			//_screenLayer.addChild(_clouds);
 			_birds = new Tweet(null,null);
@@ -39,11 +41,19 @@ package com.view
 			_birds.y=50;
 			_birds.x = Dimentions.WIDTH+12;
 			_birds.scaleX=-1;
-			
+			setModel();
+		}
+		private function setModel():void
+		{
+			if(_categorySound){
+				var chnl:SoundChannel = _categorySound.play();
+				//chnl.addEventListener(Event.SOUND_COMPLETE,function():void{setItems()});
+			}
+			setItems();
 		}
 		
 		private function onBirdClicked():void{
-			if(enabled){
+			if(super.isEnabled){
 				_birds.tweet(true);
 				//playWhoIsSound();
 			}
@@ -59,14 +69,7 @@ package com.view
 			_model.reset();
 		}
 		
-		override public function set model(model:ScreenModel):void{
-			super.model = model;
-			if(_categorySound){
-				var chnl:SoundChannel = _categorySound.play();
-				//chnl.addEventListener(Event.SOUND_COMPLETE,function():void{setItems()});
-			}
-				setItems();
-		}
+		
 		
 		private function onGoodItemClick(img:ImageItem):Boolean{
 			if(super.onGoodClick()){
