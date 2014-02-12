@@ -44,13 +44,13 @@ package com.view
 			_cloud.y=20;//(Dimentions.HEIGHT-_cloud.height)/4;
 			_cloud.addEventListener(TouchEvent.TOUCH,onCloudTouch);
 			_rain = new Image(Texture.fromBitmap(new rain()));
-			addChild(_rain);
 			_rain.x=(Dimentions.WIDTH-_rain.width)/2;
 			_rain.y=_cloud.y+_cloud.height;
 			var xml:XML = (new XML(new seed_xml()));
 			_atlas = new TextureAtlas(Texture.fromBitmap(new seed()),xml);
 			_seed = new Image(_atlas.getTexture("flower1"));
 			addChild(_seed);
+			addChild(_rain);
 			_seed.x = (Dimentions.WIDTH-_seed.width)/2;
 			_seed.y=Dimentions.HEIGHT-_seed.height-20;
 			_rain.visible=false;
@@ -100,7 +100,7 @@ package com.view
 			removeChild(_seed);
 			var seedStr:String = ("flower"+Math.min(_index,9)).toString();
 			_seed = new Image(_atlas.getTexture(seedStr));
-			addChild(_seed);
+			addChildAt(_seed,1);
 			if(_index>9){
 				_seed.scaleY = 1.1;
 			}

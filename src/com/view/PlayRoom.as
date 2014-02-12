@@ -73,7 +73,7 @@ package com.view
 		private var _baloonPopCollisionType:CbType = new CbType();
 		private var _menu:Menu;
 		private var _delayer:DelayedCall;
-		private var _sound:Sound;
+		//private var _sound:Sound;
 		public function PlayRoom()
 		{
 			
@@ -110,11 +110,13 @@ package com.view
 		
 		private function init() : void
 		{
+			super.init();
+			super.addHomeBtn();
 			_delayer = Starling.juggler.delayCall(finish,22);
 			_delayer.repeatCount = 1;
 			var soundPlayer:SoundPlayer = new SoundPlayer();
-			_sound = soundPlayer.getSound("../assets/narration/","/playRoom.mp3");
-			_sound.play();
+			//_sound = soundPlayer.getSound("../assets/narration/","/playRoom.mp3");
+			//_sound.play();
 			if(!_menu){
 				var broomBut:Button = new Button(Texture.fromBitmap(new broom()));
 				broomBut.addEventListener(Event.TRIGGERED,clean);
@@ -128,7 +130,7 @@ package com.view
 				createSpace();
 				createHand();
 				listenForMouseDown();
-				listenForMouseUp();
+				//listenForMouseUp();
 				listenForEnterFrame();
 				useAccelerometer();
 				_space.listeners.add(new InteractionListener(CbEvent.BEGIN,InteractionType.COLLISION,_floorCollisionType,_cubeCollisionType,ballToCube));
@@ -321,13 +323,17 @@ package com.view
 		
 		private function listenForMouseDown():void
 		{
-			_nativeStage.addEventListener( MouseEvent.MOUSE_DOWN, function( event : MouseEvent ) : void
-			{
-				var mousePoint : Vec2 = new Vec2( event.stageX, event.stageY );
+			addEventListener( TouchEvent.TOUCH,onTouch );
+		}
+		
+		private function onTouch(e:TouchEvent):void{
+			var touch:Touch = e.getTouch(stage);
+			var wiBtn:Sprite = e.currentTarget as Sprite;
+			if(touch && (touch.phase == TouchPhase.BEGAN)){
+				var mousePoint : Vec2 = new Vec2( touch.globalX, touch.globalY );
 				var bodies : BodyList = _space.bodiesUnderPoint( mousePoint );
-				
-				if ( bodies.length > 0 )
-				{
+
+				if ( bodies.length > 0 ){
 					var body : Body = bodies.shift();
 					_hand.body2 = body;
 					_hand.anchor2 = body.worldPointToLocal( mousePoint );
@@ -335,17 +341,12 @@ package com.view
 						_hand.active = true;
 					}
 				}
-			});
-		}
-		
-		private function listenForMouseUp():void
-		{
-			_nativeStage.addEventListener( MouseEvent.MOUSE_UP, function( event : MouseEvent ) : void
-			{
+			}
+			if(touch && (touch.phase == TouchPhase.ENDED)){
 				_hand.active = false;
-			});
+			}
 		}
-		
+			
 		private function listenForEnterFrame() : void
 		{
 			addEventListener( Event.ENTER_FRAME, onEnterFrame);
