@@ -13,9 +13,13 @@ package com.view
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import nape.geom.Winding;
+	
 	import starling.core.Starling;
 	import starling.display.Button;
+	import starling.display.DisplayObject;
 	import starling.display.Image;
+	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -24,16 +28,17 @@ package com.view
 
 	public class WhereIsScene extends IsScreen
 	{
-		private var _whereIsBtns:Vector.<Button>;
+		private var _whereIsBtns:Vector.<DisplayObject>;
 		public function WhereIsScene(mdl:ScreenModel)
 		{
 			super(mdl);
-			_whereIsBtns = new Vector.<Button>();
+			_whereIsBtns = new Vector.<DisplayObject>();
 		}
 		private var _clics:uint=0;
 		private var _resoult:String="";
 		private var _touchPoint:Point;
-
+		private var x:int;
+		private var y:int;
 		override protected function init():void{
 			super.init();
 			var bg:Image = new Image(Texture.fromBitmap(Assets.getImage(_model.backGround)));
@@ -50,8 +55,7 @@ package com.view
 				if(touch && (touch.phase == TouchPhase.BEGAN)){
 					_clics++;
 					_touchPoint = new Point(touch.globalX,touch.globalY);
-					var x:int;
-					var y:int;
+					
 					if(_clics==1){
 						x=touch.globalX;
 						y=touch.globalY;
@@ -60,6 +64,7 @@ package com.view
 						_resoult = _resoult + Math.round(touch.globalX-x).toString()+",";
 					}else{
 						_resoult = _resoult + Math.round(touch.globalY-y).toString();
+					trace(_resoult)
 						_clics=0;
 						_resoult="";
 					}
@@ -79,7 +84,8 @@ package com.view
 		}
 		
 		private function setWhoIs(item:Item):void{
-			for each(var btn:Button in _whereIsBtns){
+			for each(var btn:DisplayObject in _whereIsBtns){
+				btn.removeEventListener(TouchEvent.TOUCH,onGood);
 				_screenLayer.removeChild(btn);
 			}
 			_whoIs = item;
@@ -90,36 +96,41 @@ package com.view
 				shp.graphics.endFill();
 				var btmData:BitmapData = new BitmapData(shp.width,shp.height);
 				btmData.draw(shp);
-				var wiBtn:Button;
+				var wiBtn:Sprite;
 				var img:Image = new Image(Texture.fromBitmapData(btmData));
-				wiBtn = new Button(img.texture);
+				wiBtn = new Sprite();
+				wiBtn.addChild(img);
 				wiBtn.x = rect.x;
 				wiBtn.y = rect.y;
 				_screenLayer.addChild(wiBtn);
 				if(!_categorySoundPlaying){//wait for categorySound
 					playWhoIsSound();
 				}
-				wiBtn.addEventListener(starling.events.Event.TRIGGERED,function onGood():void{
-					if(onGoodClick()){
-						wiBtn.removeEventListener(starling.events.Event.TRIGGERED, onGood);
-						var touchEffect:ParticlesEffect = new ParticlesEffect();
-						addChild(touchEffect);
-						touchEffect.x=_touchPoint.x;
-						touchEffect.y=_touchPoint.y;
-						touchEffect.start("touchstar");
-						touchEffect.alpha=0.6;
-						Starling.juggler.delayCall(function():void{
-							touchEffect.stop();
-							removeChild(touchEffect);
-						},1);
-
-					}
-				});
-				wiBtn.alpha=0;
+				wiBtn.addEventListener(TouchEvent.TOUCH,onGood);
+				wiBtn.alpha=0.5;
 				_whereIsBtns.push(wiBtn);
 			}
 		}
-		
+		private function onGood(e:TouchEvent):void{
+			var touch:Touch = e.getTouch(stage);
+			var wiBtn:Sprite = e.currentTarget as Sprite;
+			if(touch && (touch.phase == TouchPhase.BEGAN)){
+				if(onGoodClick()){
+					wiBtn.removeEventListener(starling.events.Event.TRIGGERED, onGood);
+					var touchEffect:ParticlesEffect = new ParticlesEffect();
+					addChild(touchEffect);
+					touchEffect.x=touch.globalX;
+					touchEffect.y=touch.globalY;
+					touchEffect.start("touchstar");
+					touchEffect.alpha=0.6;
+					Starling.juggler.delayCall(function():void{
+						touchEffect.stop();
+						removeChild(touchEffect);
+					},1);
+					
+				}
+			}
+		}
 		override protected function onWhereSoundDone(e:flash.events.Event):void{
 			
 			super.onWhereSoundDone(e);
@@ -139,7 +150,7 @@ package com.view
 			var img:ImageItem = new ImageItem(Texture.fromBitmapData(btmData),item.qSound,item.aSound,item.hSound);
 			img.x = rect.x;
 			img.y = rect.y;
-			img.alpha=0;
+			img.alpha=0.2;
 			_screenLayer.addChild(img);
 			img.touched.add(onDistractorTouch);
 			}
