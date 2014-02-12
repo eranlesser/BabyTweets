@@ -57,7 +57,7 @@ package com.view.playRoom
 		private var _climbing:Boolean = false;
 		private var _particlesEffect:ParticlesEffect = new ParticlesEffect();
 		private function onTouch(e:TouchEvent):void{
-			if(e.getTouch(_material.stage).phase == TouchPhase.ENDED){
+			if(_material&&e.getTouch(_material.stage).phase == TouchPhase.ENDED){
 				//_material.removeEventListener(TouchEvent.TOUCH,onTouch);
 				fly();
 			}

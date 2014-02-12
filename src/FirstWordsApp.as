@@ -26,7 +26,7 @@ package
 		{
 			Assets.load();
 			_logo = addChild(new Image(Texture.fromBitmap(new logo()))) as Image;
-			Starling.juggler.delayCall(start,4);
+			Starling.juggler.delayCall(start,2);
 			_logo.x= (Dimentions.WIDTH-_logo.width)/2;
 			_logo.y= (Dimentions.HEIGHT-_logo.height)/2;
 			//Flurry.startSession("FGJG54WS4ZBX3DYR8T8Q");//heb

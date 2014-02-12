@@ -2,6 +2,7 @@ package
 {
 	import com.Dimentions;
 	import com.model.Session;
+	import com.utils.errorHandlers.GlobalExceptionHandler;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -40,7 +41,7 @@ package
 		}
 		
 		private function init(e:Event):void{
-			
+			new GlobalExceptionHandler(loaderInfo);
 			var viewPort:Rectangle = new Rectangle(0, 0, Dimentions.WIDTH, Dimentions.HEIGHT)
 			setDisplaySize();
 			

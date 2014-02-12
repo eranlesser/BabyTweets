@@ -18,7 +18,6 @@ package com.view
 	import flash.display.Shape;
 	import flash.display.Stage;
 	import flash.events.AccelerometerEvent;
-	import flash.events.MouseEvent;
 	import flash.media.Sound;
 	import flash.net.URLRequest;
 	import flash.sensors.Accelerometer;
@@ -88,6 +87,7 @@ package com.view
 		}
 		
 		override public function destroy():void{
+			removeEventListener( Event.ENTER_FRAME, onEnterFrame);
 			Starling.juggler.remove(_delayer);
 		}
 		private function finish():void{
@@ -132,7 +132,7 @@ package com.view
 				listenForMouseDown();
 				//listenForMouseUp();
 				listenForEnterFrame();
-				useAccelerometer();
+				//useAccelerometer();
 				_space.listeners.add(new InteractionListener(CbEvent.BEGIN,InteractionType.COLLISION,_floorCollisionType,_cubeCollisionType,ballToCube));
 				_space.listeners.add(new InteractionListener(CbEvent.BEGIN,InteractionType.COLLISION,_ballCollisionType,_cubeCollisionType,ballToFloor));
 				_space.listeners.add(new InteractionListener(CbEvent.BEGIN,InteractionType.COLLISION,_ballCollisionType,_floorCollisionType,ballToFloor));
@@ -248,7 +248,7 @@ package com.view
 		
 		private function addBackground() : void
 		{
-			drawDarkBg();
+			//drawDarkBg();
 			_room = new Sprite();
 			_room.addChild( Image.fromBitmap( new Background() ) );
 //			_room.addChild( Image.fromBitmap( new bed() ) );
@@ -265,17 +265,6 @@ package com.view
 			//rightBoard.addEventListener(TouchEvent.TOUCH,onRightBoardTouch);
 		}
 		
-		private function drawDarkBg():void{
-			var shp:Shape = new Shape();
-			shp.graphics.beginFill(0x333333);
-			shp.graphics.drawRect(0,0,Dimentions.WIDTH,Dimentions.HEIGHT);
-			shp.graphics.endFill();
-			var bmp:BitmapData = new BitmapData(Dimentions.WIDTH,Dimentions.HEIGHT,true,0x333333);
-			bmp.draw(shp)
-			var txture:Texture = Texture.fromBitmapData(bmp);
-			var img:Image = new Image(txture);
-			_screenLayer.addChild(img);
-		}
 		
 		private function onRightBoardTouch(e:TouchEvent):void{
 			var touch:Touch = e.getTouch(stage);
@@ -364,17 +353,17 @@ package com.view
 				}
 			}
 		}
-		
-		private function useAccelerometer():void
-		{
-			var accelerometer : Accelerometer = new Accelerometer();
-			accelerometer.addEventListener( AccelerometerEvent.UPDATE, function( event : AccelerometerEvent ) : void
-			{
-				_space.gravity = new Vec2( -event.accelerationX * 5000, GRAVITY_Y );
-			});
-		}
-		
-		
+//		
+//		private function useAccelerometer():void
+//		{
+//			var accelerometer : Accelerometer = new Accelerometer();
+//			accelerometer.addEventListener( AccelerometerEvent.UPDATE, function( event : AccelerometerEvent ) : void
+//			{
+//				_space.gravity = new Vec2( -event.accelerationX * 5000, GRAVITY_Y );
+//			});
+//		}
+//		
+//		
 		
 		
 		
