@@ -102,7 +102,6 @@ package com.view
 			_ballons.push(yellowbaloon);
 			
 			_ballons[0].isWho = true;		
-			super.addMenuBtn();
 			}
 		
 		

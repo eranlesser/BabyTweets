@@ -145,7 +145,6 @@ package com.view
 				
 				createFloor();
 			}
-			super.addMenuBtn();
 			//tmr.start();
 		}
 		

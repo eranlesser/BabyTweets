@@ -60,7 +60,6 @@ package com.view
 			_seed.y=Dimentions.HEIGHT-_seed.height-20;
 			_rain.visible=false;
 			isEnabled=true;
-			super.addMenuBtn();
 		}
 		
 		private function onCloudTouch(e:TouchEvent):void{
