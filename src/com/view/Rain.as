@@ -38,6 +38,11 @@ package com.view
 		private var _counter:Counter = new Counter();
 		public function Rain()
 		{
+			
+		}
+		
+		override protected function init():void{
+			super.init();
 			_cloud = new Image(Texture.fromBitmap(new cloud()));
 			addChild(_cloud);
 			_cloud.x=(Dimentions.WIDTH-_cloud.width)/2;
@@ -55,6 +60,7 @@ package com.view
 			_seed.y=Dimentions.HEIGHT-_seed.height-20;
 			_rain.visible=false;
 			isEnabled=true;
+			super.addMenuBtn();
 		}
 		
 		private function onCloudTouch(e:TouchEvent):void{

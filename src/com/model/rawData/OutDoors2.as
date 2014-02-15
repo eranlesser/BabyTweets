@@ -11,7 +11,7 @@ package com.model.rawData
 					<rect vector="393,297,158,375"/>
 				</item>
 				<item  qsound="4.mp3" groupId="ball">
-					<rect vector="120,101,160,324"/>
+					<rect vector="120,101,140,324"/>
 				</item>
 				<item  qsound="5.mp3" groupId="sand">
 					<rect vector="63,487,202,237"/>

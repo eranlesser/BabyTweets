@@ -9,8 +9,6 @@ package com.controller
 	import com.view.Baloons;
 	import com.view.Egg;
 	import com.view.HomeScreen;
-	import com.view.IScreen;
-	import com.view.IsScreen;
 	import com.view.PlayRoom;
 	import com.view.Rain;
 	import com.view.WhereIsScene;
@@ -106,7 +104,8 @@ package com.controller
 		
 		private function removeScreen(screen:AbstractScreen):void{
 			screen.done.remove(goNext);
-			screen.goHome.remove(goHome);
+			//screen.goHome.remove(goHome);
+			screen.gotoSignal.remove(goTo);
 			screen.destroy();
 			if(screen == _playRoom){
 				_playRoom.visible = false;			
@@ -143,7 +142,8 @@ package com.controller
 					break;
 			}
 			screen.done.add(goNext);
-			screen.goHome.add(goHome);
+			//screen.goHome.add(goHome);
+			screen.gotoSignal.add(goTo);
 			_app.addChild(screen as DisplayObject);
 			if(screen == _playRoom){
 				_playRoom.visible = true;

@@ -5,18 +5,18 @@ package com.model.rawData
 		public static var data:XML = 
 			<data type="whereScene" backGround="girlFace" folder="body" thumbNail="girlFaceTmb" categorySound="1.mp3" >
 				<item  qsound="2.mp3" asound="3.mp3" groupId="eyes">
-					<rect vector="378,269,141,126"/>
-					<rect vector="533,269,132,126"/>
+					<rect vector="368,269,141,126"/>
+					<rect vector="543,269,132,126"/>
 				</item>
 				<item  qsound="4.mp3" asound="5.mp3" groupId="ears">
-					<rect vector="290,336,89,144"/>
-					<rect vector="666,373,87,111"/>
+					<rect vector="290,330,89,150"/>
+					<rect vector="666,330,87,150"/>
 				</item>
 				<item  qsound="6.mp3" asound="7.mp3" groupId="mouth">
-					<rect vector="432,450,208,92"/>
+					<rect vector="432,460,208,92"/>
 				</item>
 				<item  qsound="8.mp3" asound="9.mp3" groupId="nose">
-					<rect vector="473,380,108,75"/>
+					<rect vector="473,375,108,85"/>
 				</item>
 				
 			</data>;

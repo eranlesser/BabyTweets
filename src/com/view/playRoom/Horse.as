@@ -60,7 +60,6 @@ package com.view.playRoom
 				_sound.play();
 			}
 			
-			trace(body.rotation)
 		}
 		
 		

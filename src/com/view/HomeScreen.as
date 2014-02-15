@@ -3,7 +3,6 @@ package com.view
 	import com.Dimentions;
 	import com.model.ScreensModel;
 	import com.model.Session;
-	import com.model.rawData.Texts;
 	import com.utils.filters.GlowFilter;
 	import com.view.components.FlagsMenu;
 	
@@ -23,18 +22,15 @@ package com.view
 	public class HomeScreen extends AbstractScreen
 	{
 		
-		public var gotoSignal:Signal = new Signal();
 		[Embed(source="../../assets/home/plybtn.png")]
 		private var playBt : Class;
 		[Embed(source="../../assets/home/home.png")]
 		private var home : Class;
-		[Embed(source="../../assets/confBut.png")]
-		private var wBird : 			Class;
+		
 		//private var _clouds:Clouds;
 		private var _flags:FlagsMenu;
-		private var _menuText:TextField;
+		
 		private var _titleText:TextField;
-		private var _texts:Texts;
 		public var ready:Signal = new Signal();
 		
 		public function HomeScreen(screenModel:ScreensModel)
@@ -49,7 +45,6 @@ package com.view
 		
 		override protected function init():void{
 			super.init();
-			_texts = new Texts();
 			var homeBg:Image = new Image(Texture.fromBitmap(new home()))
 			_screenLayer.addChild(homeBg);
 			var languageSettings:Array = Capabilities.languages;
@@ -59,29 +54,9 @@ package com.view
 			_flags.y=16;
 			_flags.x=Dimentions.WIDTH-_flags.width-8;
 			_screenLayer.addChild(_flags);
-			var whereBird:Button = new Button(Texture.fromBitmap(new wBird()));
-			_screenLayer.addChild(whereBird);
-			whereBird.x=8;
-			whereBird.y=8;
-			whereBird.addEventListener(Event.TRIGGERED,openMenu);
-			_menuText = new TextField(whereBird.width,40,_texts.getText("menu"),"Verdana",_texts.getMenuTextSize(),0x002661);
-			addChild(_menuText);
-			_menuText.x=whereBird.x;
-			_menuText.y=whereBird.y+whereBird.height-9;
-			_titleText = new TextField(550,100,_texts.getText("title"),"Verdana",52,0x002661);
-			addChild(_titleText);
-			_titleText.autoSize =  TextFieldAutoSize.CENTER;
-			_titleText.x=Dimentions.WIDTH-_titleText.width//+20;
-			_titleText.y=318;
-			_titleText.filter = new GlowFilter(0xFFFFFF);
-			Session.langChanged.add(
-				function():void{
-					_menuText.text = _texts.getText("menu");
-					_titleText.text = _texts.getText("title");
-					_menuText.fontSize = _texts.getMenuTextSize();
-					_titleText.x = Dimentions.WIDTH-_titleText.width;
-				}
-			);
+			
+			addTitleText(); // before init (language change dispached)
+			
 			var playBut:Button = new Button( Texture.fromBitmap(new playBt()) );
 			addChild(playBut);
 			playBut.x=110//(Dimentions.WIDTH-playBut.width)/3;
@@ -89,6 +64,16 @@ package com.view
 			playBut.addEventListener(Event.TRIGGERED,function():void{gotoSignal.dispatch(Session.currentScreen)});
 			this.addEventListener(TouchEvent.TOUCH,onTouch);
 			ready.dispatch();
+		}
+		
+		private function addTitleText():void{
+			_titleText = new TextField(550,100,_texts.getText("title"),"Verdana",52,0x002661);
+			addChild(_titleText);
+			_titleText.autoSize =  TextFieldAutoSize.CENTER;
+			_titleText.x=Dimentions.WIDTH-_titleText.width//+20;
+			_titleText.y=318;
+			_titleText.filter = new GlowFilter(0xFFFFFF);
+			super.addMenuBtn();
 		}
 		
 		private function onTouch(t:TouchEvent):void{
@@ -100,9 +85,13 @@ package com.view
 			}
 		}
 		
-		private function openMenu():void{
-			gotoSignal.dispatch(-1);
+		override public function onSessionLanguageChanged():void{
+			super.onSessionLanguageChanged();
+			_titleText.text = _texts.getText("title");
+			_titleText.x = Dimentions.WIDTH-_titleText.width;
 		}
+		
+		
 	}
 }
 

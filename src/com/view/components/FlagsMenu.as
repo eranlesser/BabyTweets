@@ -71,7 +71,6 @@ package com.view.components
 			addChild(_selectedFlag);
 			_selectedFlag.width=80;
 			_selectedFlag.height=60;
-			Session.setLanguage(lang);
 			_container.visible=false;
 			Session.lang = lang;
 			_selectedFlag.touchable = false;

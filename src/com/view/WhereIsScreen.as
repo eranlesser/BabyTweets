@@ -12,8 +12,6 @@ package com.view
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	
-	import starling.display.Button;
-	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	
@@ -42,6 +40,7 @@ package com.view
 			_birds.x = Dimentions.WIDTH+12;
 			_birds.scaleX=-1;
 			setModel();
+			super.addMenuBtn();
 		}
 		private function setModel():void
 		{

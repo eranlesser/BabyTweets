@@ -29,7 +29,8 @@ package com.view
 		protected var _whoIs:				Item;
 		private var _goodFeedBack:String;
 		protected var _model:				ScreenModel;
-		protected var _isEnabled:				Boolean;		
+		protected var _isEnabled:				Boolean;
+		private var _whereBird:Button;
 		public function IsScreen(screenModel:ScreenModel)
 		{
 			_model = screenModel;
@@ -75,7 +76,27 @@ package com.view
 		
 		override protected function init():void{
 			super.init()
-			setModel();
+			if(_model.categorySound!=""){
+				_categorySound = _soundManager.getSound("../assets/narration/",_model.folder +"/"+ _model.categorySound);
+				var chnl:SoundChannel = _categorySound.play();
+				_categorySoundPlaying=true;
+				chnl.addEventListener(flash.events.Event.SOUND_COMPLETE,onCatSoundDone);
+			}
+			_counter=0;
+			_whereBird = new Button(Texture.fromBitmap(new wBird()));
+			addChild(_whereBird);
+			_wBirdNote = new Button(Texture.fromBitmap(new wBirdNote()));
+			addChild(_wBirdNote);
+			_wBirdNote.visible = false;
+			_whereBird.x = Dimentions.WIDTH - _whereBird.width//-2;
+			_wBirdNote.x = Dimentions.WIDTH - _wBirdNote.width//-2;
+			_whereBird.addEventListener(starling.events.Event.TRIGGERED,onWhereBird);
+		}
+		
+		private function onWhereBird():void{
+			if(_isEnabled){
+				playWhoIsSound();
+			}
 		}
 		
 		public function get model():ScreenModel{
@@ -84,30 +105,6 @@ package com.view
 		
 		
 		
-		private function setModel():void
-		{
-			super.addHomeBtn();
-			if(_model.categorySound!=""){
-				_categorySound = _soundManager.getSound("../assets/narration/",_model.folder +"/"+ _model.categorySound);
-				var chnl:SoundChannel = _categorySound.play();
-				_categorySoundPlaying=true;
-				chnl.addEventListener(flash.events.Event.SOUND_COMPLETE,onCatSoundDone);
-			}
-			_counter=0;
-			var whereBird:Button = new Button(Texture.fromBitmap(new wBird()));
-			addChild(whereBird);
-			_wBirdNote = new Button(Texture.fromBitmap(new wBirdNote()));
-			addChild(_wBirdNote);
-			_wBirdNote.visible = false;
-			whereBird.x = Dimentions.WIDTH - whereBird.width//-2;
-			_wBirdNote.x = Dimentions.WIDTH - _wBirdNote.width//-2;
-			whereBird.addEventListener(starling.events.Event.TRIGGERED,function():void{
-				if(_isEnabled){
-					playWhoIsSound();
-				}
-			});
-			
-		}
 		
 		protected function goodSoundComplete(e:flash.events.Event):void{
 			_setItemsDelayer = Starling.juggler.delayCall(setItems,2);
@@ -190,6 +187,7 @@ package com.view
 		
 		override public function destroy():void{
 			Starling.juggler.remove(_setItemsDelayer);
+			_whereBird.removeEventListener(starling.events.Event.TRIGGERED,onWhereBird);
 			removeEventListeners();
 			var chld:DisplayObject;
 			while(_screenLayer.numChildren>0){

@@ -13,10 +13,7 @@ package com.view
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import nape.geom.Winding;
-	
 	import starling.core.Starling;
-	import starling.display.Button;
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -49,28 +46,29 @@ package com.view
 				addItem(_model.distractor);
 			}
 			setItems();
-			this.addEventListener(TouchEvent.TOUCH,function onMouseDown(e:TouchEvent):void{
-				var touch:Touch = e.getTouch(stage);
-				
-				if(touch && (touch.phase == TouchPhase.BEGAN)){
-					_clics++;
-					_touchPoint = new Point(touch.globalX,touch.globalY);
-					
-					if(_clics==1){
-						x=touch.globalX;
-						y=touch.globalY;
-						_resoult = _resoult + x.toString()+","+y.toString()+",";
-					}else if(_clics==2){
-						_resoult = _resoult + Math.round(touch.globalX-x).toString()+",";
-					}else{
-						_resoult = _resoult + Math.round(touch.globalY-y).toString();
-					trace(_resoult)
-						_clics=0;
-						_resoult="";
-					}
-					
-				}
-			});
+			super.addMenuBtn();
+//			this.addEventListener(TouchEvent.TOUCH,function onMouseDown(e:TouchEvent):void{
+//				var touch:Touch = e.getTouch(stage);
+//				
+//				if(touch && (touch.phase == TouchPhase.BEGAN)){
+//					_clics++;
+//					_touchPoint = new Point(touch.globalX,touch.globalY);
+//					
+//					if(_clics==1){
+//						x=touch.globalX;
+//						y=touch.globalY;
+//						_resoult = _resoult + x.toString()+","+y.toString()+",";
+//					}else if(_clics==2){
+//						_resoult = _resoult + Math.round(touch.globalX-x).toString()+",";
+//					}else{
+//						_resoult = _resoult + Math.round(touch.globalY-y).toString();
+//					trace(_resoult)
+//						_clics=0;
+//						_resoult="";
+//					}
+//					
+//				}
+//			});
 			
 			
 		}
@@ -140,19 +138,18 @@ package com.view
 		
 		private function addItem(item:Item):void{
 			for each(var rect:Rectangle in item.rects){
-
-			var shp:Shape = new Shape();
-			shp.graphics.beginFill(0xFFFFFF);
-			shp.graphics.drawRect(0,0,rect.width,rect.height);
-			shp.graphics.endFill();
-			var btmData:BitmapData = new BitmapData(shp.width,shp.height);
-			btmData.draw(shp);
-			var img:ImageItem = new ImageItem(Texture.fromBitmapData(btmData),item.qSound,item.aSound,item.hSound);
-			img.x = rect.x;
-			img.y = rect.y;
-			img.alpha=0.2;
-			_screenLayer.addChild(img);
-			img.touched.add(onDistractorTouch);
+				var shp:Shape = new Shape();
+				shp.graphics.beginFill(0xFFFFFF);
+				shp.graphics.drawRect(0,0,rect.width,rect.height);
+				shp.graphics.endFill();
+				var btmData:BitmapData = new BitmapData(shp.width,shp.height);
+				btmData.draw(shp);
+				var img:ImageItem = new ImageItem(Texture.fromBitmapData(btmData),item.qSound,item.aSound,item.hSound);
+				img.x = rect.x;
+				img.y = rect.y;
+				img.alpha=0.2;
+				_screenLayer.addChild(img);
+				img.touched.add(onDistractorTouch);
 			}
 		}
 	}

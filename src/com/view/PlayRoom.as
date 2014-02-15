@@ -111,7 +111,6 @@ package com.view
 		private function init() : void
 		{
 			super.init();
-			super.addHomeBtn();
 			_delayer = Starling.juggler.delayCall(finish,22);
 			_delayer.repeatCount = 1;
 			var soundPlayer:SoundPlayer = new SoundPlayer();
@@ -146,6 +145,7 @@ package com.view
 				
 				createFloor();
 			}
+			super.addMenuBtn();
 			//tmr.start();
 		}
 		

@@ -5,7 +5,6 @@ package com.view
 	public interface IScreen
 	{
 		function get done():Signal;
-		function get goHome():Signal;
 		function destroy():void;
 	}
 }

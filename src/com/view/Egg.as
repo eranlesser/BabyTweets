@@ -51,7 +51,7 @@ package com.view
 			isEnabled=true;
 			_counter.count(4);
 			_counter.done.add(onCounter);
-			super.addHomeBtn();
+			super.addMenuBtn();
 		}
 		
 		private function onKnock(e:TouchEvent):void{

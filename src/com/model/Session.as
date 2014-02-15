@@ -87,9 +87,6 @@ package com.model
 			outputStream.close();
 		}
 		
-		public static function setLanguage(lang:String):void{
-			
-		}
 
 	}
 }

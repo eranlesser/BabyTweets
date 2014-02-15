@@ -1,11 +1,11 @@
 package com.view
 {
 	import com.Dimentions;
+	import com.model.Session;
+	import com.model.rawData.Texts;
 	import com.view.components.ParticlesEffect;
 	import com.view.utils.SoundPlayer;
 	
-	import flash.display.BitmapData;
-	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
@@ -13,9 +13,9 @@ package com.view
 	import org.osflash.signals.Signal;
 	
 	import starling.display.Button;
-	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.text.TextField;
 	import starling.textures.Texture;
 	
 	public class AbstractScreen extends Sprite
@@ -31,9 +31,11 @@ package com.view
 		protected var _wBirdNote:			Button;
 		[Embed(source="../../assets/home/homeBtn.png")]
 		private var homeBt : 			Class;
-		private var _goHome:			Signal = new Signal();
-		
-		
+		[Embed(source="../../assets/confBut.png")]
+		private var wBird : 			Class;
+		private var _menuText:TextField;
+		protected var _texts:Texts;
+		public var gotoSignal:Signal = new Signal();
 		private var _done:Signal = new Signal();
 		public function AbstractScreen()
 		{
@@ -48,21 +50,30 @@ package com.view
 		protected function init():void
 		{
 			// TODO Auto Generated method stub
+			_texts = new Texts();
 			_screenLayer = new Sprite();
 			addChild(_screenLayer);
 			_guiLayer = new Sprite();
 			addChild(_guiLayer);
 		}
 		
-		protected function addHomeBtn():void{
-			var homeBut:Button = new Button( Texture.fromBitmap(new homeBt()) );
-			_guiLayer.addChild(homeBut);
-			homeBut.x=8;
-			homeBut.y=8;
-			homeBut.addEventListener(starling.events.Event.TRIGGERED, function():void{
-				complete();
-				goHome.dispatch()
-			});
+		
+		public function onSessionLanguageChanged():void{
+			_menuText.text = _texts.getText("menu");
+			_menuText.fontSize = _texts.getMenuTextSize();
+		}
+		
+		
+		protected function addMenuBtn():void{
+			var whereBird:Button = new Button(Texture.fromBitmap(new wBird()));
+			_screenLayer.addChild(whereBird);
+			whereBird.x=8;
+			whereBird.y=8;
+			whereBird.addEventListener(starling.events.Event.TRIGGERED,openMenu);
+			_menuText = new TextField(whereBird.width,40,_texts.getText("menu"),"Verdana",_texts.getMenuTextSize(),0x002661);
+			addChild(_menuText);
+			_menuText.x=whereBird.x;
+			_menuText.y=whereBird.y+whereBird.height-9;
 		}
 		
 		public function get done():Signal
@@ -70,16 +81,12 @@ package com.view
 			return _done;
 		}
 
-		public function get goHome():Signal
-		{
-			return _goHome;
-		}
 		
 		public function get screenLayer():Sprite{
 			return _screenLayer;
 		}
 		public function destroy():void{
-			
+			//Session.langChanged.remove(onSessionLanguageChanged);
 		}
 		
 		protected function onCatSoundDone(e:flash.events.Event):void{
@@ -87,12 +94,6 @@ package com.view
 			chnl.removeEventListener(flash.events.Event.SOUND_COMPLETE,onCatSoundDone);
 			_categorySoundPlaying=false;
 		}
-		
-
-		
-		
-		
-		
 		
 		protected function closeCurtains():void{
 			_particlesEffect = new ParticlesEffect();
@@ -125,20 +126,10 @@ package com.view
 			
 		}
 		
-		private function drawDarkBg():Image{
-			var shp:Shape = new Shape();
-			shp.graphics.beginFill(0x333333);
-			shp.graphics.drawRect(0,0,Dimentions.WIDTH,Dimentions.HEIGHT);
-			shp.graphics.endFill();
-			var bmp:BitmapData = new BitmapData(Dimentions.WIDTH,Dimentions.HEIGHT,false,0x333333);
-			bmp.draw(shp)
-			var txture:Texture = Texture.fromBitmapData(bmp);
-			var img:Image = new Image(txture);
-			img.alpha=0.2;
-			return img;
-			//_screenLayer.addChild(img);
-		}
 		
+		private function openMenu():void{
+			gotoSignal.dispatch(-1);
+		}
 		
 		
 	}
