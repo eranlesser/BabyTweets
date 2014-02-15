@@ -29,7 +29,6 @@ package com.view
 		protected var _whoIs:				Item;
 		private var _goodFeedBack:String;
 		protected var _model:				ScreenModel;
-		protected var _isEnabled:				Boolean;
 		private var _whereBird:Button;
 		public function IsScreen(screenModel:ScreenModel)
 		{
@@ -38,7 +37,7 @@ package com.view
 		}
 		
 		protected function  onDistractorTouch(imageItem:ImageItem):void{
-			if(!_isEnabled){
+			if(!isEnabled){
 				return;
 			}
 			var sound:Sound;
@@ -54,9 +53,9 @@ package com.view
 					var hSound:Sound = new Sound(new URLRequest("../assets/sounds/effects/"+imageItem.enhanceSound));
 					hSound.play();
 				}
-				_isEnabled=true;
+				isEnabled=true;
 			});
-			_isEnabled = false;
+			isEnabled = false;
 		}
 		
 		override public function set isEnabled(bool:Boolean):void{
@@ -71,7 +70,6 @@ package com.view
 				//removeChild(_bg)
 			}
 			
-			_isEnabled=bool;
 		}
 		
 		override protected function init():void{
@@ -94,7 +92,7 @@ package com.view
 		}
 		
 		private function onWhereBird():void{
-			if(_isEnabled){
+			if(isEnabled){
 				playWhoIsSound();
 			}
 		}
@@ -118,7 +116,7 @@ package com.view
 			var sound:Sound = _soundManager.getSound("../assets/narration/",_whoIs.qSound);
 			var chanel:SoundChannel = sound.play(); 
 			chanel.addEventListener(flash.events.Event.SOUND_COMPLETE,onWhereSoundDone);
-			_isEnabled=false;
+			isEnabled=false;
 		}
 		private function get goodFeedBack():String{
 			var soundFile:String;
@@ -147,7 +145,7 @@ package com.view
 		
 		protected function setItems():Boolean{
 			_model.resetDistractors();
-			_isEnabled = false;
+			isEnabled = false;
 			if(_counter>=_model.numItems){
 				complete();
 				dispatchDone();
@@ -158,7 +156,7 @@ package com.view
 		}
 		
 		protected function onGoodClick():Boolean{ 
-			if(!_isEnabled){
+			if(!isEnabled){
 				return false;
 			}
 			var goodSound:Sound;
@@ -170,7 +168,7 @@ package com.view
 			}
 			var channel:SoundChannel = goodSound.play();
 			channel.addEventListener(flash.events.Event.SOUND_COMPLETE,goodSoundComplete);
-			_isEnabled=false;
+			_isEnabled=false;//don't blur
 			//var fltr:ColorMatrixFilter = new ColorMatrixFilter();
 			//filter.invert();
 			//fltr.adjustSaturation(0.5);
@@ -180,7 +178,7 @@ package com.view
 		
 		protected function onWhereSoundDone(e:flash.events.Event):void{
 			var chanel:SoundChannel= e.target as SoundChannel;
-			_isEnabled = true
+			isEnabled = true
 			chanel.removeEventListener(flash.events.Event.SOUND_COMPLETE,onWhereSoundDone);
 			_wBirdNote.visible=false;
 		}

@@ -1,7 +1,6 @@
 package com.view
 {
 	import com.Dimentions;
-	import com.model.Session;
 	import com.model.rawData.Texts;
 	import com.view.components.ParticlesEffect;
 	import com.view.utils.SoundPlayer;
@@ -15,8 +14,6 @@ package com.view
 	import starling.display.Button;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.text.TextField;
-	import starling.textures.Texture;
 	
 	public class AbstractScreen extends Sprite
 	{
@@ -27,15 +24,9 @@ package com.view
 		protected var _guiLayer:			Sprite;
 		protected var _screenLayer:			Sprite;
 		protected var _soundManager:		SoundPlayer = new SoundPlayer();
-		private var _isEnabled:				Boolean;		
+		protected var _isEnabled:				Boolean;		
 		protected var _wBirdNote:			Button;
-		[Embed(source="../../assets/home/homeBtn.png")]
-		private var homeBt : 			Class;
-		[Embed(source="../../assets/confBut.png")]
-		private var wBird : 			Class;
-		private var _menuText:TextField;
-		protected var _texts:Texts;
-		public var gotoSignal:Signal = new Signal();
+		
 		private var _done:Signal = new Signal();
 		public function AbstractScreen()
 		{
@@ -50,7 +41,6 @@ package com.view
 		protected function init():void
 		{
 			// TODO Auto Generated method stub
-			_texts = new Texts();
 			_screenLayer = new Sprite();
 			addChild(_screenLayer);
 			_guiLayer = new Sprite();
@@ -58,23 +48,6 @@ package com.view
 		}
 		
 		
-		public function onSessionLanguageChanged():void{
-			_menuText.text = _texts.getText("menu");
-			_menuText.fontSize = _texts.getMenuTextSize();
-		}
-		
-		
-		protected function addMenuBtn():void{
-			var whereBird:Button = new Button(Texture.fromBitmap(new wBird()));
-			_screenLayer.addChild(whereBird);
-			whereBird.x=8;
-			whereBird.y=8;
-			whereBird.addEventListener(starling.events.Event.TRIGGERED,openMenu);
-			_menuText = new TextField(whereBird.width,40,_texts.getText("menu"),"Verdana",_texts.getMenuTextSize(),0x002661);
-			addChild(_menuText);
-			_menuText.x=whereBird.x;
-			_menuText.y=whereBird.y+whereBird.height-9;
-		}
 		
 		public function get done():Signal
 		{
@@ -126,10 +99,6 @@ package com.view
 			
 		}
 		
-		
-		private function openMenu():void{
-			gotoSignal.dispatch(-1);
-		}
 		
 		
 	}

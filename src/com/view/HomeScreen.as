@@ -3,6 +3,7 @@ package com.view
 	import com.Dimentions;
 	import com.model.ScreensModel;
 	import com.model.Session;
+	import com.model.rawData.Texts;
 	import com.utils.filters.GlowFilter;
 	import com.view.components.FlagsMenu;
 	
@@ -31,7 +32,9 @@ package com.view
 		private var _flags:FlagsMenu;
 		
 		private var _titleText:TextField;
+		private var _texts:Texts;
 		public var ready:Signal = new Signal();
+		public var goToSignal:Signal = new Signal();
 		
 		public function HomeScreen(screenModel:ScreensModel)
 		{
@@ -45,6 +48,7 @@ package com.view
 		
 		override protected function init():void{
 			super.init();
+			_texts = new Texts();
 			var homeBg:Image = new Image(Texture.fromBitmap(new home()))
 			_screenLayer.addChild(homeBg);
 			var languageSettings:Array = Capabilities.languages;
@@ -61,7 +65,9 @@ package com.view
 			addChild(playBut);
 			playBut.x=110//(Dimentions.WIDTH-playBut.width)/3;
 			playBut.y=168;
-			playBut.addEventListener(Event.TRIGGERED,function():void{gotoSignal.dispatch(Session.currentScreen)});
+			playBut.addEventListener(Event.TRIGGERED,function():void{
+				goToSignal.dispatch(Session.currentScreen)
+			});
 			this.addEventListener(TouchEvent.TOUCH,onTouch);
 			ready.dispatch();
 		}
@@ -73,7 +79,7 @@ package com.view
 			_titleText.x=Dimentions.WIDTH-_titleText.width//+20;
 			_titleText.y=318;
 			_titleText.filter = new GlowFilter(0xFFFFFF);
-			super.addMenuBtn();
+			Session.langChanged.add(onSessionLanguageChanged);
 		}
 		
 		private function onTouch(t:TouchEvent):void{
@@ -85,8 +91,7 @@ package com.view
 			}
 		}
 		
-		override public function onSessionLanguageChanged():void{
-			super.onSessionLanguageChanged();
+		private function onSessionLanguageChanged():void{
 			_titleText.text = _texts.getText("title");
 			_titleText.x = Dimentions.WIDTH-_titleText.width;
 		}

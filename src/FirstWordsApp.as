@@ -16,6 +16,8 @@ package
 		[Embed(source="assets/logo.png")]
 		private var logo : Class;
 		private var _logo:Image;
+		public var screensLayer:Sprite;
+		public var navLayer:Sprite;
 		public function FirstWordsApp()
 		{
 			super();
@@ -24,6 +26,10 @@ package
 		
 		private function init(e:Event):void
 		{
+			screensLayer=new Sprite();
+			navLayer=new Sprite();
+			addChild(screensLayer);
+			addChild(navLayer);
 			Assets.load();
 			_logo = addChild(new Image(Texture.fromBitmap(new logo()))) as Image;
 			Starling.juggler.delayCall(start,2);

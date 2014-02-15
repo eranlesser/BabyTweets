@@ -40,7 +40,6 @@ package com.view
 			_birds.x = Dimentions.WIDTH+12;
 			_birds.scaleX=-1;
 			setModel();
-			super.addMenuBtn();
 		}
 		private function setModel():void
 		{

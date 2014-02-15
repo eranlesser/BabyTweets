@@ -9,6 +9,7 @@ package com.controller
 	import com.view.Baloons;
 	import com.view.Egg;
 	import com.view.HomeScreen;
+	import com.view.Navigator;
 	import com.view.PlayRoom;
 	import com.view.Rain;
 	import com.view.WhereIsScene;
@@ -16,37 +17,41 @@ package com.controller
 	import com.view.menu.ConfigurationScreen;
 	
 	import starling.display.DisplayObject;
-	import starling.display.Sprite;
 
 	public class Progressor
 	{
 		
-		private var _app:					Sprite;
+		private var _app:					FirstWordsApp;
 		private var _screens:				ScreensModel;
 		private var _homeScreen:			HomeScreen;
 		private var _currentScreen:		    AbstractScreen;
 		private var _playRoom:				PlayRoom;
 		private var _configScr:ConfigurationScreen;
-		public function Progressor(app:Sprite)
+		private var _navigator:Navigator;
+		public function Progressor(app:FirstWordsApp)
 		{
 			_app = app;
 			_screens = new ScreensModel(WhereIsData.data);
 			_homeScreen = new HomeScreen(_screens);
 			_homeScreen.ready.add(initConfigScreen);
+			_homeScreen.goToSignal.add(onGoTo);
 		}
 		
 		private function initConfigScreen():void{
 			_configScr = new ConfigurationScreen(_screens);
 			_configScr.goHome.add(function():void{
-				_app.removeChild(_configScr);
+				_app.screensLayer.removeChild(_configScr);
 				goHome();
 			});
 			_configScr.menu.gotoSignal.add(onGoTo);
+			_navigator = new Navigator();
+			_navigator.gotoSignal.add(onGoTo);
+			_app.navLayer.addChild(_navigator);
 		}
 		
 		private function onGoTo(indx:int):void{
 			if(indx>-2){
-				_app.removeChild(_configScr);
+				_app.screensLayer.removeChild(_configScr);
 			}
 			goTo(indx);
 		}
@@ -64,16 +69,18 @@ package com.controller
 		}
 		
 		public function goTo(screenIndex:int):void{
+			_navigator.visible=true;
 			if(screenIndex==-1){
-				_app.addChild(_configScr);
+				_app.screensLayer.addChild(_configScr);
 				_configScr.menu.setSelectedScreen();
 				_configScr.onAdded();
+				_navigator.visible=false;
 			}else if(screenIndex==-2){
 //				if(!Session.playRoomEnabled){
 //					var rateThisApp:RateThisApp = new RateThisApp();
-//					_app.addChild(rateThisApp);
+//					_app.screensLayer.addChild(rateThisApp);
 //				}else{
-					_app.removeChild(_configScr);
+					_app.screensLayer.removeChild(_configScr);
 					_currentScreen = addScreen(_screens.getScreen(_screens.playRoomIndex));
 					_playRoom.noTimer=true;
 					Session.currentScreen=0;
@@ -96,21 +103,18 @@ package com.controller
 			if(_currentScreen){
 				removeScreen(_currentScreen);
 			}
-			_app.addChild(_homeScreen);
+			_app.screensLayer.addChild(_homeScreen);
 			_currentScreen = _homeScreen;
-			_homeScreen.gotoSignal.add(goTo);
 			//Flurry.getInstance().logEvent("navigate home");
 		}
 		
 		private function removeScreen(screen:AbstractScreen):void{
 			screen.done.remove(goNext);
-			//screen.goHome.remove(goHome);
-			screen.gotoSignal.remove(goTo);
 			screen.destroy();
 			if(screen == _playRoom){
 				_playRoom.visible = false;			
 			}else{
-				_app.removeChild(screen as DisplayObject);
+				_app.screensLayer.removeChild(screen as DisplayObject);
 			}
 		}
 		
@@ -143,8 +147,7 @@ package com.controller
 			}
 			screen.done.add(goNext);
 			//screen.goHome.add(goHome);
-			screen.gotoSignal.add(goTo);
-			_app.addChild(screen as DisplayObject);
+			_app.screensLayer.addChild(screen as DisplayObject);
 			if(screen == _playRoom){
 				_playRoom.visible = true;
 			}

@@ -46,7 +46,6 @@ package com.view
 				addItem(_model.distractor);
 			}
 			setItems();
-			super.addMenuBtn();
 //			this.addEventListener(TouchEvent.TOUCH,function onMouseDown(e:TouchEvent):void{
 //				var touch:Touch = e.getTouch(stage);
 //				
@@ -147,7 +146,7 @@ package com.view
 				var img:ImageItem = new ImageItem(Texture.fromBitmapData(btmData),item.qSound,item.aSound,item.hSound);
 				img.x = rect.x;
 				img.y = rect.y;
-				img.alpha=0.2;
+				img.alpha=0;
 				_screenLayer.addChild(img);
 				img.touched.add(onDistractorTouch);
 			}
