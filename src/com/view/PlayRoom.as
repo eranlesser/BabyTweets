@@ -17,10 +17,8 @@ package com.view
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.display.Stage;
-	import flash.events.AccelerometerEvent;
 	import flash.media.Sound;
 	import flash.net.URLRequest;
-	import flash.sensors.Accelerometer;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -71,7 +69,7 @@ package com.view
 		private var _baloonCollisionType:CbType = new CbType();
 		private var _baloonPopCollisionType:CbType = new CbType();
 		private var _menu:Menu;
-		private var _delayer:DelayedCall;
+		//private var _delayer:DelayedCall;
 		//private var _sound:Sound;
 		public function PlayRoom()
 		{
@@ -82,14 +80,24 @@ package com.view
 		
 		public function set noTimer(val:Boolean):void{
 			if(val){
-				Starling.juggler.remove(_delayer);
+				//Starling.juggler.remove(_delayer);
 			}
 		}
 		
 		override public function destroy():void{
-			removeEventListener( Event.ENTER_FRAME, onEnterFrame);
-			Starling.juggler.remove(_delayer);
+			
+			//Starling.juggler.remove(_delayer);
 		}
+		
+		override public function set visible(value:Boolean):void{
+			super.visible=value;
+			if(value){
+				addEventListener( Event.ENTER_FRAME, onEnterFrame);
+			}else{
+				removeEventListener( Event.ENTER_FRAME, onEnterFrame);
+			}
+		}
+		
 		private function finish():void{
 			closeCurtains();
 			Starling.juggler.delayCall(dispatchDone,2);
@@ -111,8 +119,8 @@ package com.view
 		private function init() : void
 		{
 			super.init();
-			_delayer = Starling.juggler.delayCall(finish,22);
-			_delayer.repeatCount = 1;
+//			_delayer = Starling.juggler.delayCall(finish,22);
+//			_delayer.repeatCount = 1;
 			var soundPlayer:SoundPlayer = new SoundPlayer();
 			//_sound = soundPlayer.getSound("../assets/narration/","/playRoom.mp3");
 			//_sound.play();
@@ -171,7 +179,10 @@ package com.view
 					_room.addChild(baloon.material);
 					baloon.material.addEventListener(TouchEvent.TOUCH,function onTouch(e:TouchEvent):void{
 						//if(baloon.material.stage == null){
+						var touch:Touch = e.getTouch(stage);
+						if(touch && (touch.phase == TouchPhase.BEGAN)){
 							_hand.active = false;
+						}
 						//}
 					});
 					_balloons.push(baloon);

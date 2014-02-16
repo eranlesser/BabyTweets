@@ -7,7 +7,6 @@ package com.view
 	import com.utils.filters.GlowFilter;
 	import com.view.components.FlagsMenu;
 	
-	import flash.system.Capabilities;
 	import flash.text.TextFieldAutoSize;
 	
 	import org.osflash.signals.Signal;

@@ -7,9 +7,9 @@ package com.model.rawData
 		<screens>
 			{Toys.data}
 			{OutDoors1.data}
-			{EggData.data}
-			{Clothes.data}
 			{BaloonsData.data}
+			{Clothes.data}
+			{EggData.data}
 			{BodyPartsScene2.data}
 			{BodyPartsScene1.data}
 			{AnimalCards1.data}

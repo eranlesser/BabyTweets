@@ -90,6 +90,8 @@ package com.controller
 			_configScr.menu.setSelectedScreen();
 			_configScr.onAdded();
 			_navigator.visible=false;
+			if(_currentScreen)
+				removeScreen(_currentScreen);
 		}
 		
 		private function removeScreen(screen:AbstractScreen):void{
@@ -131,9 +133,6 @@ package com.controller
 			}
 			screen.done.add(goNext);
 			_app.screensLayer.addChild(screen as DisplayObject);
-			if(screen == _playRoom){
-				_playRoom.visible = true;
-			}
 			return screen;
 		}
 		

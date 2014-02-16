@@ -12,16 +12,16 @@ package com.model
 			for each(var screen:XML in data.screens.data){
 				model = new ScreenModel(screen);
 				_screens.push(model);
-				if(model.type == "playRoom" && _playRoomIndex==0){
-					_playRoomIndex = _screens.indexOf(model);
-				}
+//				if(model.type == "playRoom" && _playRoomIndex==0){
+//					_playRoomIndex = _screens.indexOf(model);
+//				}
 			}
 		}
 		
-		public function get playRoomIndex():int
-		{
-			return _playRoomIndex;
-		}
+//		public function get playRoomIndex():int
+//		{
+//			return _playRoomIndex;
+//		}
 
 		public function get index():int{
 			return _index;

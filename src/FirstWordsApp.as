@@ -47,10 +47,9 @@ package
 		
 		private function start():void{
 			removeChild(_logo);
-			var languageSettings:Array = Capabilities.languages;
-			var locale:String = languageSettings[0].toString().toLowerCase();
+			
 			var progressor:Progressor = new Progressor(this);
-			Session.lang = FlagsMenu.getLanguageFromLocale(locale);
+			
 		}
 		
 		

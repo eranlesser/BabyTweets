@@ -3,6 +3,7 @@ package com.model.rawData
 	import com.model.Session;
 	import com.view.components.FlagsMenu;
 	
+	import flash.system.Capabilities;
 	import flash.utils.Dictionary;
 
 	public class Texts
@@ -71,6 +72,11 @@ package com.model.rawData
 		}
 		
 		public function getText(id:String):String{
+			if(!Session.lang){
+				var languageSettings:Array = Capabilities.languages;
+				var locale:String = languageSettings[0].toString().toLowerCase();
+				Session.lang = FlagsMenu.getLanguageFromLocale(locale);
+			}
 			if(Session.lang==FlagsMenu.ISRAEL){
 				return flip(_hebTexts[id]);
 			}else{

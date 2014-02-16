@@ -10,11 +10,12 @@ package com.view.components
 	
 	import org.osflash.signals.Signal;
 	
-	import starling.core.Starling;
 	import starling.display.Button;
-	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.textures.Texture;
 	
 	public class ScreensMenu extends Sprite
@@ -26,7 +27,6 @@ package com.view.components
 		private var _restoreButton:Button;
 		private var _buyButton:Button;
 		private var _inApper:InAppPurchaser;
-		private var playRoomThmb:ThumbNail;
 		private var _screenThumbs:Vector.<ThumbNail> = new Vector.<ThumbNail>();
 		public var gotoSignal:Signal = new Signal();
 		public function ScreensMenu(screens:ScreensModel)
@@ -41,10 +41,6 @@ package com.view.components
 		
 		private function onsessionChanged():void{
 			trace("onsessionChanged","Session.fullVersionEnabled",Session.fullVersionEnabled)
-			//update bonus screen
-			playRoomThmb.locked = false;//!Session.playRoomEnabled;
-			//update selected screen + inapp purchase
-			//setSelectedScreen();
 			for(var i:uint = 0;i<_screenThumbs.length;i++){
 				(_screenThumbs[i]).locked=false;
 			}
@@ -66,26 +62,18 @@ package com.view.components
 					menuThmb.x = (n%4)*wdt + (n%4)*gap;//menuThmb.x-5;
 					menuThmb.y = Math.floor(n/4)*(hgt+gap);//menuThmb.y-5;
 					addChild(menuThmb);
-					menuThmb.addEventListener(starling.events.Event.TRIGGERED,function onTriggered(e:starling.events.Event):void{
-						var thmbNail:ThumbNail = ThumbNail(Button(e.target).parent);
-						if(thmbNail.locked){
-							//Flurry.getInstance().logEvent("productStore.available",productStore.available);
-							buyFullVersion();
-						}else{
-							gotoSignal.dispatch(thmbNail.index);
-						}
-					});
+					menuThmb.addEventListener(TouchEvent.TOUCH,onMenuThumbTouch);
 					n++;
 				}//if
 				i++;
 			}//for
-			playRoomThmb = new ThumbNail(Assets.getAtlas("thumbs").getTexture("plane"),-2,new Image(Texture.fromBitmap(new bonus())));
-			addChild(playRoomThmb);
-			playRoomThmb.addEventListener(starling.events.Event.TRIGGERED,function onTriggered(e:starling.events.Event):void{
-				gotoSignal.dispatch(ThumbNail(Button(e.target).parent).index);
-			});
-			playRoomThmb.x = (n%4)*wdt + (n%4)*gap;//menuThmb.x-5;
-			playRoomThmb.y = Math.floor(n/4)*(hgt+gap);//menuThmb.y-5;
+			//playRoomThmb = new ThumbNail(Assets.getAtlas("thumbs").getTexture("plane"),19,new Image(Texture.fromBitmap(new bonus())));
+			//addChild(playRoomThmb);
+//			playRoomThmb.addEventListener(starling.events.Event.TRIGGERED,function onTriggered(e:starling.events.Event):void{
+//				gotoSignal.dispatch(ThumbNail(Button(e.target).parent).index);
+//			});
+//			playRoomThmb.x = (n%4)*wdt + (n%4)*gap;//menuThmb.x-5;
+//			playRoomThmb.y = Math.floor(n/4)*(hgt+gap);//menuThmb.y-5;
 			x=(Dimentions.WIDTH-width)/2;
 			_restoreButton = new Button(Texture.fromBitmap(new btn()),"RESTORE TRANSACTIONS");
 			addChild(_restoreButton);
@@ -104,6 +92,19 @@ package com.view.components
 			_buyButton.addEventListener(Event.TRIGGERED,buyFullVersion);
 			_buyButton.visible = !Session.fullVersionEnabled;
 		}//function
+		
+		
+		private function onMenuThumbTouch(e:TouchEvent):void{
+			var touch:Touch = e.getTouch(stage);
+			if(touch && (touch.phase == TouchPhase.BEGAN)){
+				var thmbNail:ThumbNail = ThumbNail(e.currentTarget);
+				if(thmbNail.locked){
+					buyFullVersion();
+				}else{
+					gotoSignal.dispatch(thmbNail.index);
+				}
+			}
+		}
 		
 		public function setSelectedScreen():void{
 			for(var i:uint = 0;i<_screenThumbs.length;i++){ // subtract restore btn
@@ -160,46 +161,37 @@ package com.view.components
 
 
 import com.Assets;
-import com.Dimentions;
 import com.utils.filters.GlowFilter;
 
 import flash.display.BitmapData;
 import flash.display.Shape;
 
-import starling.display.Button;
 import starling.display.Image;
 import starling.display.Sprite;
 import starling.textures.Texture;
 
 class ThumbNail extends Sprite{
 	public var index:int;
-	private var _btn:Button;
-	private var _selectedFrame:Button;
+	private var _btn:Image;
+	private var _selectedFrame:Image;
 	private var _lock:Image;
-	private var isBonusThumb:Boolean=false;
-	function ThumbNail(asset:Texture,indx:int,lock:Image=null){
-		var frame:Button = new Button((getFrame(1)))
-		_selectedFrame = new Button((getFrame(2)))
+	function ThumbNail(asset:Texture,indx:int){
+		var frame:Image = new Image((getFrame(1)))
+		_selectedFrame = new Image((getFrame(2)))
 		_selectedFrame.filter=new GlowFilter(0x041626,1,12,12);
 		addChild(frame);
 		addChild(_selectedFrame);
 		_selectedFrame.visible=false;
-		_btn = new Button(asset);
+		_btn = new Image(asset);
 		addChild(_btn)
 		_btn.x=(frame.width-_btn.width)/2;
 		_btn.y=(frame.height-_btn.height)/2;
-		if(lock){//bonus
-			_lock=lock;
-			_lock.x=(frame.width-_lock.width)/2;
-			_lock.y=-15;
-			isBonusThumb=true;
-		}else{
-			_lock = new Image(Texture.fromBitmap(new Assets.Lock));
-			_lock.x=(frame.width-_lock.width)/2;
-			_lock.y=(frame.height-_lock.height)/2;
-			_lock.alpha=0.7;
-			_lock.filter = new GlowFilter(0xEDFF19,1,6,6);
-		}
+		
+		_lock = new Image(Texture.fromBitmap(new Assets.Lock));
+		_lock.x=(frame.width-_lock.width)+4;
+		_lock.y=(frame.height-_lock.height)+4;
+		_lock.alpha=0.9;
+			//_lock.filter = new GlowFilter(0xEDFF19,1,6,6);
 		addChild(_lock);
 		_lock.touchable=false;
 		index=indx;
@@ -226,9 +218,6 @@ class ThumbNail extends Sprite{
 	
 	public function set locked(val:Boolean):void{
 		_lock.visible=val;
-		if(!isBonusThumb){
-			this.touchable = !val;
-		}
 	}
 	
 	public function get locked():Boolean{
