@@ -3,7 +3,11 @@ package
 	import com.Assets;
 	import com.Dimentions;
 	import com.controller.Progressor;
+	import com.model.Session;
 	import com.sticksports.nativeExtensions.flurry.Flurry;
+	import com.view.components.FlagsMenu;
+	
+	import flash.system.Capabilities;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -43,9 +47,12 @@ package
 		
 		private function start():void{
 			removeChild(_logo);
+			var languageSettings:Array = Capabilities.languages;
+			var locale:String = languageSettings[0].toString().toLowerCase();
 			var progressor:Progressor = new Progressor(this);
-			progressor.goHome();
+			Session.lang = FlagsMenu.getLanguageFromLocale(locale);
 		}
+		
 		
 		
 	}

@@ -21,15 +21,15 @@ package com.view
 	public class IsScreen extends AbstractScreen implements IScreen
 	{
 		[Embed(source="../../assets/whereBird.png")]
-		private var wBird : 			Class;
+		private var wBird : 				Class;
 		[Embed(source="../../assets/whereBird_note.png")]
 		private var wBirdNote : 			Class;
-		private var _counter:			uint=0;
-		private var _setItemsDelayer:	IAnimatable;
+		private var _counter:				uint=0;
+		private var _setItemsDelayer:		IAnimatable;
 		protected var _whoIs:				Item;
-		private var _goodFeedBack:String;
+		private var _goodFeedBack:			String;
 		protected var _model:				ScreenModel;
-		private var _whereBird:Button;
+		private var _whereBird:				Button;
 		public function IsScreen(screenModel:ScreenModel)
 		{
 			_model = screenModel;
@@ -62,7 +62,7 @@ package com.view
 			super.isEnabled = bool;
 			var fltr:ColorMatrixFilter = new ColorMatrixFilter();
 			//filter.invert();
-			fltr.adjustSaturation(-0.7);
+			fltr.adjustSaturation(-0.4);
 			if(bool == false){
 				_screenLayer.filter=fltr;
 			}else{

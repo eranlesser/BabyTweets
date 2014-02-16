@@ -44,23 +44,20 @@ package com.view
 //			playText.hAlign = HAlign.CENTER;
 //			playText.x=playBut.x+12;
 //			playText.y=playBut.y+playBut.height-5;
+			
+			_texts = Texts.instance;
 		}
 		
 		override protected function init():void{
 			super.init();
-			_texts = new Texts();
 			var homeBg:Image = new Image(Texture.fromBitmap(new home()))
 			_screenLayer.addChild(homeBg);
-			var languageSettings:Array = Capabilities.languages;
-			var locale:String = languageSettings[0].toString().toLowerCase();
-			_flags = new FlagsMenu(locale);
+			addTitleText(); // before init (language change dispached)
+			_flags = new FlagsMenu(Session.lang);
 			//_flags.visible=false;
 			_flags.y=16;
 			_flags.x=Dimentions.WIDTH-_flags.width-8;
 			_screenLayer.addChild(_flags);
-			
-			addTitleText(); // before init (language change dispached)
-			
 			var playBut:Button = new Button( Texture.fromBitmap(new playBt()) );
 			addChild(playBut);
 			playBut.x=110//(Dimentions.WIDTH-playBut.width)/3;

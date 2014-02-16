@@ -13,10 +13,20 @@ package com.model.rawData
 		private var _engTexts:Dictionary = new Dictionary();
 		private var _frTexts:Dictionary = new Dictionary();
 		private var _ruTexts:Dictionary = new Dictionary();
-		public function Texts()
+		private  static var  _instance:Texts;
+		public function Texts(enforcer:SingeltonEnforcer)
 		{
 			init();
 		}
+		
+		public static function get instance():Texts{
+			if(!_instance){
+				_instance = new Texts(new SingeltonEnforcer());
+			}
+			return _instance;
+		}
+		
+		
 		
 		private function init():void{
 			_hebTexts["nav"]="תפריט";
@@ -107,4 +117,8 @@ package com.model.rawData
 		}
 		
 	}
+}
+
+class SingeltonEnforcer{
+	
 }

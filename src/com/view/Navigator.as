@@ -19,14 +19,14 @@ package com.view
 		private var wBird : 			Class;
 		private var _menuText:TextField;
 		protected var _texts:Texts;
-		public var gotoSignal:Signal = new Signal();
+		public var openMenuSignal:Signal = new Signal();
 		public function Navigator()
 		{
 			init();
 		}
 		
 		private function init():void{
-			_texts = new Texts();
+			_texts = Texts.instance;
 			addMenuBtn();
 			Session.langChanged.add(onSessionLanguageChanged);
 		}
@@ -49,7 +49,7 @@ package com.view
 		}
 		
 		private function openMenu():void{
-			gotoSignal.dispatch(-1);
+			openMenuSignal.dispatch();
 		}
 	}
 }

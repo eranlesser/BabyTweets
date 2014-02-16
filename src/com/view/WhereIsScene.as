@@ -104,7 +104,7 @@ package com.view
 					playWhoIsSound();
 				}
 				wiBtn.addEventListener(TouchEvent.TOUCH,onGood);
-				wiBtn.alpha=0.5;
+				wiBtn.alpha=0;
 				_whereIsBtns.push(wiBtn);
 			}
 		}

@@ -39,10 +39,10 @@ package com.view.components
 			btn.y=-6;
 			btn.alpha=0.6;
 			addFlags();
-			setSelectedFlag(getLanguageFromLocale(lang))
+			setSelectedFlag(lang)
 		}
 		
-		private function getLanguageFromLocale(lang:String):String{
+		public static function getLanguageFromLocale(lang:String):String{
 			var str:String=ISRAEL;
 			switch(lang){
 				case "en":

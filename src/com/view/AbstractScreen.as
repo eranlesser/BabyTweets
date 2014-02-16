@@ -24,10 +24,10 @@ package com.view
 		protected var _guiLayer:			Sprite;
 		protected var _screenLayer:			Sprite;
 		protected var _soundManager:		SoundPlayer = new SoundPlayer();
-		protected var _isEnabled:				Boolean;		
+		protected var _isEnabled:			Boolean;		
 		protected var _wBirdNote:			Button;
+		private var _done:					Signal = new Signal();
 		
-		private var _done:Signal = new Signal();
 		public function AbstractScreen()
 		{
 			addEventListener(starling.events.Event.ADDED_TO_STAGE,onAdded);

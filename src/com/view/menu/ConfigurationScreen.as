@@ -83,7 +83,7 @@ package com.view.menu
 			homeBut.addEventListener(starling.events.Event.TRIGGERED, function():void{
 				goHome.dispatch()
 			});
-			_texts = new Texts();
+			_texts = Texts.instance;;
 			var navButton:Button = new Button( Texture.fromBitmap(new screens()) );
 			var aboutButton:Button = new Button( Texture.fromBitmap(new about()));
 			
