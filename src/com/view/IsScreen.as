@@ -30,6 +30,7 @@ package com.view
 		private var _goodFeedBack:			String;
 		protected var _model:				ScreenModel;
 		private var _whereBird:				Button;
+		protected var _wBirdNote:			Button;
 		public function IsScreen(screenModel:ScreenModel)
 		{
 			_model = screenModel;

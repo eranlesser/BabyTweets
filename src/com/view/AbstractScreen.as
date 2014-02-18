@@ -11,7 +11,6 @@ package com.view
 	
 	import org.osflash.signals.Signal;
 	
-	import starling.display.Button;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
@@ -25,7 +24,6 @@ package com.view
 		protected var _screenLayer:			Sprite;
 		protected var _soundManager:		SoundPlayer = new SoundPlayer();
 		protected var _isEnabled:			Boolean;		
-		protected var _wBirdNote:			Button;
 		private var _done:					Signal = new Signal();
 		
 		public function AbstractScreen()
