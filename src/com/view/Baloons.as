@@ -58,13 +58,8 @@ package com.view
 		
 		public function Baloons(model:ScreenModel)
 		{
-			super();
-			if(model.categorySound!=""){
-				_categorySound = _soundManager.getSound("../assets/narration/",model.folder +"/"+ model.categorySound);
-				var chnl:SoundChannel = _categorySound.play();
-				_categorySoundPlaying=true;
-				chnl.addEventListener(flash.events.Event.SOUND_COMPLETE,onCatSoundDone);
-			}
+			super(model);
+			
 			
 		}
 		
@@ -185,7 +180,12 @@ package com.view
 			_whereBird.x = Dimentions.WIDTH - _whereBird.width//-2;
 			_wBirdNote.x = Dimentions.WIDTH - _wBirdNote.width//-2;
 			_whereBird.addEventListener(starling.events.Event.TRIGGERED,onWhereBird);
-			
+			if(_model.categorySound!=""){
+				_categorySound = _soundManager.getSound("../assets/narration/",_model.folder +"/"+ _model.categorySound);
+				var chnl:SoundChannel = _categorySound.play();
+				_categorySoundPlaying=true;
+				chnl.addEventListener(flash.events.Event.SOUND_COMPLETE,onCatSoundDone);
+			}
 			
 			//_ballons[0].isWho = true;		
 		}

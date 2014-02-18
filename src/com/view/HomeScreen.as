@@ -43,7 +43,7 @@ package com.view
 //			playText.hAlign = HAlign.CENTER;
 //			playText.x=playBut.x+12;
 //			playText.y=playBut.y+playBut.height-5;
-			
+			super(null);
 			_texts = Texts.instance;
 		}
 		

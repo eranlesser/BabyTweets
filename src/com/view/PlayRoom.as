@@ -71,11 +71,11 @@ package com.view
 		private var _menu:Menu;
 		//private var _delayer:DelayedCall;
 		//private var _sound:Sound;
-		public function PlayRoom()
+		public function PlayRoom(model:ScreenModel)
 		{
 			
 			//new Sound(new URLRequest(heb/playRoom.mp3"));
-			
+			super(model);
 		}
 		
 		public function set noTimer(val:Boolean):void{

@@ -1,6 +1,7 @@
 package com.view
 {
 	import com.Dimentions;
+	import com.model.ScreenModel;
 	import com.model.rawData.Texts;
 	import com.view.components.ParticlesEffect;
 	import com.view.utils.SoundPlayer;
@@ -25,9 +26,10 @@ package com.view
 		protected var _soundManager:		SoundPlayer = new SoundPlayer();
 		protected var _isEnabled:			Boolean;		
 		private var _done:					Signal = new Signal();
-		
-		public function AbstractScreen()
+		protected var _model:				ScreenModel;
+		public function AbstractScreen(model:ScreenModel)
 		{
+			_model = model
 			addEventListener(starling.events.Event.ADDED_TO_STAGE,onAdded);
 		}
 		

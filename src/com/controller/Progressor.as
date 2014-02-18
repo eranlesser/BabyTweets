@@ -114,17 +114,17 @@ package com.controller
 					screen = new WhereIsScene(model);
 					break;
 				case "egg":
-					screen = new Egg();
+					screen = new Egg(model);
 					break;
 				case "rain":
-					screen = new Rain();
+					screen = new Rain(model);
 					break;
 				case "baloons":
 					screen = new Baloons(model);
 					break;
 				case "playRoom":
 					if(!_playRoom){
-						_playRoom = new PlayRoom();
+						_playRoom = new PlayRoom(model);
 						_playRoom.model=model;
 					}
 					_playRoom.visible = true;

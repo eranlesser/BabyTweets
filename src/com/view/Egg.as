@@ -32,13 +32,17 @@ package com.view
 		private var _vc:Vector.<Texture> = new Vector.<Texture>();
 		private var _curFrame:uint = 0;
 		private var _knockSound:Sound = new Sound(new URLRequest("../../../../assets/sounds/egg/knock.mp3"));
-		public function Egg()
+		public function Egg(model:ScreenModel)
 		{
-			
+			super(model);
 		}
 		
 		override protected function init():void{
 			super.init();
+			if(_model.categorySound!=""){
+				_categorySound = _soundManager.getSound("../assets/narration/",_model.folder +"/"+ _model.categorySound);
+				var chnl:SoundChannel = _categorySound.play();
+			}
 			_atlas = Assets.getAtlas("egg");
 			_egg = (new Image(_atlas.getTexture("egg1")));
 			addChild(_egg);

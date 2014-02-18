@@ -36,13 +36,17 @@ package com.view
 		private var _index:uint=1;
 		private var _chnl:SoundChannel;
 		private var _counter:Counter = new Counter();
-		public function Rain()
+		public function Rain(model:ScreenModel)
 		{
-			
+			super(model);
 		}
 		
 		override protected function init():void{
 			super.init();
+			if(_model.categorySound!=""){
+				_categorySound = _soundManager.getSound("../assets/narration/",_model.folder +"/"+ _model.categorySound);
+				var chnl:SoundChannel = _categorySound.play();
+			}
 			_cloud = new Image(Texture.fromBitmap(new cloud()));
 			addChild(_cloud);
 			_cloud.x=(Dimentions.WIDTH-_cloud.width)/2;

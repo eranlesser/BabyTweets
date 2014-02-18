@@ -28,13 +28,11 @@ package com.view
 		private var _setItemsDelayer:		IAnimatable;
 		protected var _whoIs:				Item;
 		private var _goodFeedBack:			String;
-		protected var _model:				ScreenModel;
 		private var _whereBird:				Button;
 		protected var _wBirdNote:			Button;
 		public function IsScreen(screenModel:ScreenModel)
 		{
-			_model = screenModel;
-			super();
+			super(screenModel);
 		}
 		
 		protected function  onDistractorTouch(imageItem:ImageItem):void{
