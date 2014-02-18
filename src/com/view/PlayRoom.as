@@ -34,7 +34,6 @@ package com.view
 	import nape.shape.Polygon;
 	import nape.space.Space;
 	
-	import starling.animation.DelayedCall;
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Image;
@@ -125,12 +124,12 @@ package com.view
 			//_sound = soundPlayer.getSound("../assets/narration/","/playRoom.mp3");
 			//_sound.play();
 			if(!_menu){
-				var broomBut:Button = new Button(Texture.fromBitmap(new broom()));
-				broomBut.addEventListener(Event.TRIGGERED,clean);
-				addChild(broomBut);
-				broomBut.x=Dimentions.WIDTH-broomBut.width-8;
-				broomBut.y=4;
-				broomBut.scaleY=0.75;
+				//var broomBut:Button = new Button(Texture.fromBitmap(new broom()));
+				//broomBut.addEventListener(Event.TRIGGERED,clean);
+				//addChild(broomBut);
+				//broomBut.x=Dimentions.WIDTH-broomBut.width-8;
+				//broomBut.y=4;
+				//broomBut.scaleY=0.75;
 				_nativeStage = Starling.current.nativeStage;
 				
 				addBackground();
@@ -217,20 +216,20 @@ package com.view
 			//_menu.visible = false;
 		}
 		
-		
-		private function clean(e:Event):void{
-			var lngt:uint = _space.bodies.length;
-			if (lngt>0) {
-				for (var i:int = 0; i < lngt; i++) {
-					// getting the body
-					var body:Body=_space.bodies.at(0);
-					_space.bodies.remove(body);
-				}
-			}
-			_room.removeChildren(1);
-			createFloor();
-			_menu.reset();
-		}
+//		
+//		private function clean(e:Event):void{
+//			var lngt:uint = _space.bodies.length;
+//			if (lngt>0) {
+//				for (var i:int = 0; i < lngt; i++) {
+//					// getting the body
+//					var body:Body=_space.bodies.at(0);
+//					_space.bodies.remove(body);
+//				}
+//			}
+//			_room.removeChildren(1);
+//			createFloor();
+//			_menu.reset();
+//		}
 		
 		private function ballToCube(collision:InteractionCallback):void {
 			collision.arbiters.foreach(function(arb:Arbiter):void {

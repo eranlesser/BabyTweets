@@ -34,7 +34,7 @@ package com.view
 			//_clouds = new Clouds()
 			//_screenLayer.addChild(_clouds);
 			_birds = new Tweet(null,null);
-			addChild(_birds);
+			_screenLayer.addChild(_birds);
 			_birds.clicked.add(onBirdClicked);
 			_birds.y=50;
 			_birds.x = Dimentions.WIDTH+12;

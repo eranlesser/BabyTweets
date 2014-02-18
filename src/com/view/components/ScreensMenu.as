@@ -7,6 +7,7 @@ package com.view.components
 	import com.model.Session;
 	import com.utils.InAppPurchaser;
 	import com.utils.InApper;
+	import com.view.menu.Store;
 	
 	import org.osflash.signals.Signal;
 	
@@ -22,30 +23,27 @@ package com.view.components
 	{
 		[Embed(source="../../../assets/bonus.png")]
 		private var bonus : 			Class;
-		[Embed(source = "../../../assets/btn.png")] 
-		private static const btn:Class;
-		private var _restoreButton:Button;
-		private var _buyButton:Button;
-		private var _inApper:InAppPurchaser;
+				private var _restoreButton:Button;
+		
 		private var _screenThumbs:Vector.<ThumbNail> = new Vector.<ThumbNail>();
 		public var gotoSignal:Signal = new Signal();
+		private var _store:Store;
 		public function ScreensMenu(screens:ScreensModel)
 		{
 			init(screens);
 			setSelectedScreen();
-			initInapper();
 			//Starling.juggler.delayCall(initIPurchases,3);
 		}
 		
 		
 		
-		private function onsessionChanged():void{
+		public function onsessionChanged():void{
 			trace("onsessionChanged","Session.fullVersionEnabled",Session.fullVersionEnabled)
 			for(var i:uint = 0;i<_screenThumbs.length;i++){
 				(_screenThumbs[i]).locked=false;
 			}
 			_restoreButton.visible = false//!Session.fullVersionEnabled;
-			_buyButton.visible = false//!Session.fullVersionEnabled;
+			//_buyButton.visible = false//!Session.fullVersionEnabled;
 		}
 		
 		private function init(screens:ScreensModel):void
@@ -75,22 +73,15 @@ package com.view.components
 //			playRoomThmb.x = (n%4)*wdt + (n%4)*gap;//menuThmb.x-5;
 //			playRoomThmb.y = Math.floor(n/4)*(hgt+gap);//menuThmb.y-5;
 			x=(Dimentions.WIDTH-width)/2;
-			_restoreButton = new Button(Texture.fromBitmap(new btn()),"RESTORE TRANSACTIONS");
-			addChild(_restoreButton);
-			_restoreButton.x=12;
-			_restoreButton.y=-100; // iphone 100 , ipad 72
-			_restoreButton.fontSize=24;
-			_restoreButton.fontColor=0x003B94;
-			_restoreButton.addEventListener(Event.TRIGGERED,onRestoreClicked);
-			_restoreButton.visible = !Session.fullVersionEnabled;
-			_buyButton = new Button(Texture.fromBitmap(new btn()),"Buy Full Version");
-			_buyButton.fontSize=24;
-			_buyButton.fontColor=0x003B94;
-			addChild(_buyButton);
-			_buyButton.x=this.width-12-_buyButton.width;
-			_buyButton.y=-100;// iphone 100 , ipad 72
-			_buyButton.addEventListener(Event.TRIGGERED,buyFullVersion);
-			_buyButton.visible = !Session.fullVersionEnabled;
+//			_restoreButton = new Button(Texture.fromBitmap(new btn()),"RESTORE TRANSACTIONS");
+//			_restoreButton.fontColor = 0xFFFFFF;
+//			addChild(_restoreButton);
+//			_restoreButton.x=12;
+//			_restoreButton.y=-100; // iphone 100 , ipad 72
+//			_restoreButton.fontSize=24;
+//			_restoreButton.addEventListener(Event.TRIGGERED,onRestoreClicked);
+//			_restoreButton.visible = !Session.fullVersionEnabled;
+			
 		}//function
 		
 		
@@ -99,7 +90,7 @@ package com.view.components
 			if(touch && (touch.phase == TouchPhase.BEGAN)){
 				var thmbNail:ThumbNail = ThumbNail(e.currentTarget);
 				if(thmbNail.locked){
-					buyFullVersion();
+					_store.buyFullVersion();
 				}else{
 					gotoSignal.dispatch(thmbNail.index);
 				}
@@ -121,40 +112,10 @@ package com.view.components
 			}
 		}
 		
-		private function onRestoreClicked(e:Event):void{
-			
-			_inApper.signal.addOnce(onInApperEvent);
-			_inApper.restoreTransactions();
-		}
-		
-		private function buyFullVersion():void{
-			_inApper.signal.addOnce(onInApperEvent);
-			//_inApper.purchase("babyTweetsHeb.fullVersion",1);
-			_inApper.purchase(Session.inAppFullVersionId,1);
-		}
-		
-		private function initInapper():void{
-			if(!_inApper){
-				if(Session.OS=="IOS"){
-					_inApper = new InApper();
-				}else{
-					//_inApper = new InApperAndroid();
-				}
-				Session.changed.add(onsessionChanged);
-			}
-		}
 		
 		
-		private function onInApperEvent(eventType:String,data:Object=null):void{
-			switch(eventType){
-				case InApper.PRODUCT_TRANSACTION_SUCCEEDED:
-					Session.fullVersionEnabled=true;
-					break;
-//				case InApper.PRODUCT_RESTORE_SUCCEEDED:
-//					Session.fullVersionEnabled=true;
-//					break;
-			}
-		}
+		
+		
 		
 	}
 }

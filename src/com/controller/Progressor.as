@@ -88,7 +88,6 @@ package com.controller
 		private function openMenu():void{
 			_app.screensLayer.addChild(_configScr);
 			_configScr.menu.setSelectedScreen();
-			_configScr.onAdded();
 			_navigator.visible=false;
 			if(_currentScreen)
 				removeScreen(_currentScreen);
