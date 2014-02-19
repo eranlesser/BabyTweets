@@ -15,11 +15,15 @@ package com.view.menu
 	{
 	[Embed(source="../../../assets/home/homeBtn.png")]
 	private var homeBt : 			Class;
+	[Embed(source="../../../assets/store/bgg.png")]
+	private var btn : 			Class;
 	private var _inApper:InAppPurchaser;
+	private var _childrenGurd:ChildSafe;
+	private var _purchase:Button;
+	private var _restore:Button;
 	public var goHome:Signal = new Signal();
 		public function Store()
 		{
-			super();
 			init();
 			
 		}
@@ -34,6 +38,24 @@ package com.view.menu
 			homeBut.addEventListener(starling.events.Event.TRIGGERED, function():void{
 				goHome.dispatch()
 			});
+			_childrenGurd = new ChildSafe();
+			addChild(_childrenGurd);
+			_purchase = new Button(Texture.fromBitmap(new btn()),"Buy");
+			_purchase.fontColor = 0xFFFFFF;
+			addChild(_purchase);
+			_purchase.x=370;
+			_purchase.y=180; // iphone 100 , ipad 72
+			_purchase.fontSize=24;
+			_purchase.addEventListener(starling.events.Event.TRIGGERED,buyFullVersion);
+			
+			_restore = new Button(Texture.fromBitmap(new btn()),"Restore Purchase");
+			_restore.fontColor = 0xFFFFFF;
+			addChild(_restore);
+			_restore.x=50;
+			_restore.y=180; // iphone 100 , ipad 72
+			_restore.fontSize=24;
+			_restore.addEventListener(starling.events.Event.TRIGGERED,onRestoreClicked);
+			
 			initInapper();
 		}
 		private function onInApperEvent(eventType:String,data:Object=null):void{
@@ -52,7 +74,7 @@ package com.view.menu
 			_inApper.restoreTransactions();
 		}
 		
-		public function buyFullVersion():void{
+		private function buyFullVersion():void{
 			_inApper.signal.addOnce(onInApperEvent);
 			//_inApper.purchase("babyTweetsHeb.fullVersion",1);
 			_inApper.purchase(Session.inAppFullVersionId,1);
@@ -96,7 +118,7 @@ class ChildSafe extends Sprite{
 	public var goodAnswer:Signal = new Signal();
 	private var _tField:flash.text.TextField;
 	private var _alert:Sprite = new Sprite();
-	
+	public var confirmed:Boolean=false;
 	
 	public function start():void{
 		_tField.visible=true;
@@ -146,6 +168,7 @@ class ChildSafe extends Sprite{
 		// TODO Auto-generated method stub
 		if(_tField.text=="14"){
 			goodAnswer.dispatch();
+			confirmed = true;
 		}
 		
 	}

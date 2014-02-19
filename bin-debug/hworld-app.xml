@@ -17,7 +17,7 @@
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
 	  <!--<id>com.babytweets.heb</id> --> 
 	 <!-- <id>com.whereIs.dev</id>  -->
-	  <id>com.pamtam.babytweets.debug</id> <!--  BabyTweetsEn provisioning profile--> 
+	  <id>com.pamtam.babytweets</id> <!--  BabyTweetsEn provisioning profile--> 
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>Baby Tweets</filename>

@@ -5,9 +5,9 @@ package com.view.components
 	import com.model.ScreenModel;
 	import com.model.ScreensModel;
 	import com.model.Session;
-	import com.utils.InAppPurchaser;
-	import com.utils.InApper;
 	import com.view.menu.Store;
+	
+	import flash.events.Event;
 	
 	import org.osflash.signals.Signal;
 	
@@ -23,11 +23,13 @@ package com.view.components
 	{
 		[Embed(source="../../../assets/bonus.png")]
 		private var bonus : 			Class;
-				private var _restoreButton:Button;
-		
+		[Embed(source="../../../assets/store/bgg.png")]
+		private var btn : 			Class;
 		private var _screenThumbs:Vector.<ThumbNail> = new Vector.<ThumbNail>();
 		public var gotoSignal:Signal = new Signal();
+		private var _storeBtn:Button;
 		private var _store:Store;
+		
 		public function ScreensMenu(screens:ScreensModel)
 		{
 			init(screens);
@@ -42,7 +44,6 @@ package com.view.components
 			for(var i:uint = 0;i<_screenThumbs.length;i++){
 				(_screenThumbs[i]).locked=false;
 			}
-			_restoreButton.visible = false//!Session.fullVersionEnabled;
 			//_buyButton.visible = false//!Session.fullVersionEnabled;
 		}
 		
@@ -73,16 +74,27 @@ package com.view.components
 //			playRoomThmb.x = (n%4)*wdt + (n%4)*gap;//menuThmb.x-5;
 //			playRoomThmb.y = Math.floor(n/4)*(hgt+gap);//menuThmb.y-5;
 			x=(Dimentions.WIDTH-width)/2;
-//			_restoreButton = new Button(Texture.fromBitmap(new btn()),"RESTORE TRANSACTIONS");
-//			_restoreButton.fontColor = 0xFFFFFF;
-//			addChild(_restoreButton);
-//			_restoreButton.x=12;
-//			_restoreButton.y=-100; // iphone 100 , ipad 72
-//			_restoreButton.fontSize=24;
-//			_restoreButton.addEventListener(Event.TRIGGERED,onRestoreClicked);
-//			_restoreButton.visible = !Session.fullVersionEnabled;
+			if(Session.fullVersionEnabled==false){
+				_storeBtn = new Button(Texture.fromBitmap(new btn()),"Buy");
+				_storeBtn.fontColor = 0xFFFFFF;
+				addChild(_storeBtn);
+				_storeBtn.x=670;
+				_storeBtn.y=-80; // iphone 100 , ipad 72
+				_storeBtn.fontSize=24;
+				_storeBtn.addEventListener(starling.events.Event.TRIGGERED,onStore);
+			}
 			
-		}//function
+		}
+		private function onStore():void
+		{
+			// TODO Auto Generated method stub
+			if(!_store){
+				_store = new Store();
+			}
+			addChild(_store);
+			//_store.buyFullVersion();
+		}
+		//function
 		
 		
 		private function onMenuThumbTouch(e:TouchEvent):void{
@@ -90,7 +102,7 @@ package com.view.components
 			if(touch && (touch.phase == TouchPhase.BEGAN)){
 				var thmbNail:ThumbNail = ThumbNail(e.currentTarget);
 				if(thmbNail.locked){
-					_store.buyFullVersion();
+					onStore();
 				}else{
 					gotoSignal.dispatch(thmbNail.index);
 				}
