@@ -7,8 +7,6 @@ package com.view.components
 	import com.model.Session;
 	import com.view.menu.Store;
 	
-	import flash.events.Event;
-	
 	import org.osflash.signals.Signal;
 	
 	import starling.display.Button;
@@ -21,11 +19,10 @@ package com.view.components
 	
 	public class ScreensMenu extends Sprite
 	{
-		[Embed(source="../../../assets/bonus.png")]
-		private var bonus : 			Class;
 		[Embed(source="../../../assets/store/bgg.png")]
 		private var btn : 			Class;
 		private var _screenThumbs:Vector.<ThumbNail> = new Vector.<ThumbNail>();
+		private var _thumbs:Sprite;
 		public var gotoSignal:Signal = new Signal();
 		private var _storeBtn:Button;
 		private var _store:Store;
@@ -49,6 +46,8 @@ package com.view.components
 		
 		private function init(screens:ScreensModel):void
 		{
+			_thumbs = new Sprite();
+			addChild(_thumbs);
 			var i:int=0;
 			var n:int=0;
 			var wdt:uint=170;
@@ -59,27 +58,20 @@ package com.view.components
 					var menuThmb:ThumbNail = new ThumbNail(Assets.getAtlas("thumbs").getTexture(screen.thumbNail),i);
 					_screenThumbs.push(menuThmb);
 					menuThmb.x = (n%4)*wdt + (n%4)*gap;//menuThmb.x-5;
-					menuThmb.y = Math.floor(n/4)*(hgt+gap);//menuThmb.y-5;
-					addChild(menuThmb);
+					menuThmb.y = Math.floor(n/4)*(hgt+gap)+110;//menuThmb.y-5;
+					_thumbs.addChild(menuThmb);
 					menuThmb.addEventListener(TouchEvent.TOUCH,onMenuThumbTouch);
 					n++;
 				}//if
 				i++;
 			}//for
-			//playRoomThmb = new ThumbNail(Assets.getAtlas("thumbs").getTexture("plane"),19,new Image(Texture.fromBitmap(new bonus())));
-			//addChild(playRoomThmb);
-//			playRoomThmb.addEventListener(starling.events.Event.TRIGGERED,function onTriggered(e:starling.events.Event):void{
-//				gotoSignal.dispatch(ThumbNail(Button(e.target).parent).index);
-//			});
-//			playRoomThmb.x = (n%4)*wdt + (n%4)*gap;//menuThmb.x-5;
-//			playRoomThmb.y = Math.floor(n/4)*(hgt+gap);//menuThmb.y-5;
-			x=(Dimentions.WIDTH-width)/2;
+			_thumbs.x=(Dimentions.WIDTH - _thumbs.width)/2
 			if(Session.fullVersionEnabled==false){
-				_storeBtn = new Button(Texture.fromBitmap(new btn()),"Buy");
+				_storeBtn = new Button(Texture.fromBitmap(new btn()),"Full Version");
 				_storeBtn.fontColor = 0xFFFFFF;
 				addChild(_storeBtn);
-				_storeBtn.x=670;
-				_storeBtn.y=-80; // iphone 100 , ipad 72
+				_storeBtn.x=740;
+				_storeBtn.y=30; // iphone 100 , ipad 72
 				_storeBtn.fontSize=24;
 				_storeBtn.addEventListener(starling.events.Event.TRIGGERED,onStore);
 			}
@@ -90,6 +82,11 @@ package com.view.components
 			// TODO Auto Generated method stub
 			if(!_store){
 				_store = new Store();
+				_store.goHome.add(function():void{
+					_store.stop();
+					//_store.visible = false
+					removeChild(_store);
+				});
 			}
 			addChild(_store);
 			//_store.buyFullVersion();

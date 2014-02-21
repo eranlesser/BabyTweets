@@ -1,5 +1,6 @@
 package com.view.menu
 {
+	import com.Dimentions;
 	import com.model.Session;
 	import com.utils.InAppPurchaser;
 	import com.utils.InApper;
@@ -7,18 +8,22 @@ package com.view.menu
 	import org.osflash.signals.Signal;
 	
 	import starling.display.Button;
+	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.textures.Texture;
 
 	public class Store extends Sprite
 	{
-	[Embed(source="../../../assets/home/homeBtn.png")]
-	private var homeBt : 			Class;
+		[Embed(source="../../../assets/confBut.png")]
+		private var wBird : 			Class;
 	[Embed(source="../../../assets/store/bgg.png")]
 	private var btn : 			Class;
+	[Embed(source="../../../assets/menu/bg.png")]
+	private var bg : 			Class;
+
 	private var _inApper:InAppPurchaser;
-	private var _childrenGurd:ChildSafe;
+	private var _ageValidator:AgeValidator;
 	private var _purchase:Button;
 	private var _restore:Button;
 	public var goHome:Signal = new Signal();
@@ -28,34 +33,45 @@ package com.view.menu
 			
 		}
 		
+		public function start():void{
+			_ageValidator.start();	
+		}
+		
+		public function stop():void{
+			_ageValidator.stop();
+		}
+		
 		private function init():void
 		{
 			// TODO Auto Generated method stub
-			var homeBut:Button = new Button( Texture.fromBitmap(new homeBt()) );
+			var bgr:Image = new Image(Texture.fromBitmap(new bg()));
+			addChild(bgr);
+			var homeBut:Button = new Button( Texture.fromBitmap(new wBird()) );
 			addChild(homeBut);
 			homeBut.x=8;
 			homeBut.y=8;
 			homeBut.addEventListener(starling.events.Event.TRIGGERED, function():void{
 				goHome.dispatch()
 			});
-			_childrenGurd = new ChildSafe();
-			addChild(_childrenGurd);
 			_purchase = new Button(Texture.fromBitmap(new btn()),"Buy");
 			_purchase.fontColor = 0xFFFFFF;
 			addChild(_purchase);
-			_purchase.x=370;
-			_purchase.y=180; // iphone 100 , ipad 72
+			_purchase.x=Dimentions.WIDTH/2-_purchase.width-22;;
+			_purchase.y=400; // iphone 100 , ipad 72
 			_purchase.fontSize=24;
 			_purchase.addEventListener(starling.events.Event.TRIGGERED,buyFullVersion);
 			
 			_restore = new Button(Texture.fromBitmap(new btn()),"Restore Purchase");
 			_restore.fontColor = 0xFFFFFF;
 			addChild(_restore);
-			_restore.x=50;
-			_restore.y=180; // iphone 100 , ipad 72
+			_restore.x=Dimentions.WIDTH/2+22;;
+			_restore.y=400; // iphone 100 , ipad 72
 			_restore.fontSize=24;
 			_restore.addEventListener(starling.events.Event.TRIGGERED,onRestoreClicked);
-			
+			_ageValidator = new AgeValidator();
+			addChild(_ageValidator);
+			_ageValidator.x = (this.width - _ageValidator.width)/2;
+			_ageValidator.y=220;
 			initInapper();
 		}
 		private function onInApperEvent(eventType:String,data:Object=null):void{
@@ -102,23 +118,22 @@ import flash.text.TextFormatAlign;
 import org.osflash.signals.Signal;
 
 import starling.core.Starling;
-import starling.display.Button;
 import starling.display.Image;
 import starling.display.Sprite;
-import starling.events.Event;
 import starling.text.TextField;
 import starling.textures.Texture;
 
-class ChildSafe extends Sprite{
+class AgeValidator extends Sprite{
 	[Embed(source="../../../assets/menu/whiteBg.png")]
 	private var bg : 			Class;
-	[Embed(source="../../../assets/menu/bg.png")]
-	private var bg2 : 			Class;
-	
+		
 	public var goodAnswer:Signal = new Signal();
 	private var _tField:flash.text.TextField;
-	private var _alert:Sprite = new Sprite();
 	public var confirmed:Boolean=false;
+	private var _bg:Image;
+	public function AgeValidator(){
+		init();
+	}
 	
 	public function start():void{
 		_tField.visible=true;
@@ -130,15 +145,11 @@ class ChildSafe extends Sprite{
 	}
 	
 	private function init():void{
-		_alert.addChild(new Image(Texture.fromBitmap(new bg())));
-		var tf:starling.text.TextField = new starling.text.TextField(400,100,"Are you an adult?","verdana",24,0XFF530D);
-		_alert.addChild(tf);
+		addChild(new Image(Texture.fromBitmap(new bg())));
+		var tf:starling.text.TextField = new starling.text.TextField(400,100,"Please insert year of birth","verdana",24,0XFF530D);
+		addChild(tf);
+		tf.x=(width-tf.width)/2
 		
-		tf.x=(_alert.width-tf.width)/2
-		var qf:starling.text.TextField = new starling.text.TextField(400,100,"20 - 6 =","Verdana",22,0x99583D);
-		_alert.addChild(qf);
-		qf.y=80;
-		qf.x=42;
 		_tField = new flash.text.TextField();
 		// Create default text format
 		var textFormat:TextFormat = new TextFormat("Arial", 24, 0x000000);
@@ -156,10 +167,9 @@ class ChildSafe extends Sprite{
 		_tField.x=(Dimentions.WIDTH-_tField.width)/2+52;
 		_tField.y=(Dimentions.HEIGHT-_tField.height)/2+12;
 		_tField.addEventListener(flash.events.Event.CHANGE,onGoodAnswer);
-		addChild(new Image(Texture.fromBitmap(new bg2())));
-		addChild(_alert);
-		_alert.x=(Dimentions.WIDTH-_alert.width)/2;
-		_alert.y=(Dimentions.HEIGHT-_alert.height)/2;
+		//addChild(_alert);
+		//_alert.x=(Dimentions.WIDTH-_alert.width)/2;
+		//_alert.y=(Dimentions.HEIGHT-_alert.height)/2;
 		
 	}
 	

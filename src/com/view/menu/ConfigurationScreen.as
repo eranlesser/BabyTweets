@@ -36,8 +36,6 @@ package com.view.menu
 		private var tp : Class;
 		[Embed(source="../../../assets/starling.png")]
 		private var strlng : Class;
-		[Embed(source = "../../../assets/store/bgg.png")] 
-		private static const btn:Class;
 
 		
 		public var goHome:Signal = new Signal();
@@ -48,20 +46,19 @@ package com.view.menu
 		private var _about:TextField;
 		private var _menu:ScreensMenu;
 		private var _texts:Texts;
-		private var _buyButton:Button;
+
 		public function ConfigurationScreen(screensModel:ScreensModel)
 		{
 			addChild(new Image(Texture.fromBitmap(new bg())));
 			_menu = new ScreensMenu(screensModel);
-			addChild(_menu);
-			_menu.y=110;
+			//_menu.y=110;
 			init();
+			addChild(_menu);
 			
 			
 		}
 		
 		private function onsessionChanged():void{
-			_buyButton.visible = false;
 			_menu.onsessionChanged();
 		}
 		
@@ -105,24 +102,10 @@ package com.view.menu
 				addChild(_navText);
 				addChild(_aboutText);
 			}
-			_buyButton = new Button(Texture.fromBitmap(new btn()),"Full Version");
-			_buyButton.fontSize=24;
-			_buyButton.fontColor=0xFFFFFF;
-			_buyButton.fontBold=true;
-			addChild(_buyButton);
-			_buyButton.x=this.width-12-_buyButton.width;
-			_buyButton.y=-100;// iphone 100 , ipad 72
-			_buyButton.addEventListener(Event.TRIGGERED,openStore);
-			_buyButton.visible = !Session.fullVersionEnabled;
+			
 			Session.changed.add(onsessionChanged);
 			setState("nav");
 		}
-		
-		private function openStore():void
-		{
-			// TODO Auto Generated method stub
-			
-		}		
 		
 		
 		private function setTexts():void{
