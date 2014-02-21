@@ -21,6 +21,8 @@ package com.view.menu
 	private var btn : 			Class;
 	[Embed(source="../../../assets/menu/bg.png")]
 	private var bg : 			Class;
+	[Embed(source="../../../assets/menu/whiteBg.png")]
+	private var whiteBg : 			Class;
 
 	private var _inApper:InAppPurchaser;
 	private var _ageValidator:AgeValidator;
@@ -33,19 +35,12 @@ package com.view.menu
 			
 		}
 		
-		public function start():void{
-			_ageValidator.start();	
-		}
-		
-		public function stop():void{
-			_ageValidator.stop();
-		}
-		
 		private function init():void
 		{
 			// TODO Auto Generated method stub
 			var bgr:Image = new Image(Texture.fromBitmap(new bg()));
 			addChild(bgr);
+			var miniBg:Image = addChild(new Image(Texture.fromBitmap(new whiteBg()))) as Image; 
 			var homeBut:Button = new Button( Texture.fromBitmap(new wBird()) );
 			addChild(homeBut);
 			homeBut.x=8;
@@ -57,7 +52,7 @@ package com.view.menu
 			_purchase.fontColor = 0xFFFFFF;
 			addChild(_purchase);
 			_purchase.x=Dimentions.WIDTH/2-_purchase.width-22;;
-			_purchase.y=400; // iphone 100 , ipad 72
+			_purchase.y=Dimentions.HEIGHT/2-_purchase.height; // iphone 100 , ipad 72
 			_purchase.fontSize=24;
 			_purchase.addEventListener(starling.events.Event.TRIGGERED,buyFullVersion);
 			
@@ -65,14 +60,31 @@ package com.view.menu
 			_restore.fontColor = 0xFFFFFF;
 			addChild(_restore);
 			_restore.x=Dimentions.WIDTH/2+22;;
-			_restore.y=400; // iphone 100 , ipad 72
+			_restore.y=Dimentions.HEIGHT/2-_restore.height; // iphone 100 , ipad 72
 			_restore.fontSize=24;
 			_restore.addEventListener(starling.events.Event.TRIGGERED,onRestoreClicked);
 			_ageValidator = new AgeValidator();
 			addChild(_ageValidator);
+			miniBg.x= (Dimentions.WIDTH-miniBg.width)/2
+			miniBg.y= (Dimentions.HEIGHT-miniBg.height)/2
 			_ageValidator.x = (this.width - _ageValidator.width)/2;
-			_ageValidator.y=220;
+			_ageValidator.y=280;
+			_ageValidator.goodAnswer.add(setPurchaseState);
 			initInapper();
+			setPurchaseState();
+		}
+		
+		private function setPurchaseState():void
+		{
+			if(_ageValidator.confirmed){
+				_ageValidator.visible=false;
+				_restore.visible=true;
+				_purchase.visible=true;
+			}else{
+				_ageValidator.visible=true;
+				_restore.visible=false;
+				_purchase.visible=false;
+			}
 		}
 		private function onInApperEvent(eventType:String,data:Object=null):void{
 			switch(eventType){
@@ -108,6 +120,7 @@ package com.view.menu
 	}
 }
 import com.Dimentions;
+import com.model.Session;
 
 import flash.events.Event;
 import flash.text.TextField;
@@ -124,8 +137,7 @@ import starling.text.TextField;
 import starling.textures.Texture;
 
 class AgeValidator extends Sprite{
-	[Embed(source="../../../assets/menu/whiteBg.png")]
-	private var bg : 			Class;
+	
 		
 	public var goodAnswer:Signal = new Signal();
 	private var _tField:flash.text.TextField;
@@ -135,21 +147,16 @@ class AgeValidator extends Sprite{
 		init();
 	}
 	
-	public function start():void{
-		_tField.visible=true;
-	}
 	
-	public function stop():void{
-		_tField.text="";
-		_tField.visible=false;
+	override public function set visible(value:Boolean):void{
+		super.visible=value;
+		_tField.visible=value;
 	}
 	
 	private function init():void{
-		addChild(new Image(Texture.fromBitmap(new bg())));
-		var tf:starling.text.TextField = new starling.text.TextField(400,100,"Please insert year of birth","verdana",24,0XFF530D);
+		var tf:starling.text.TextField = new starling.text.TextField(400,100,"Please insert year of birth","verdana",24,0x002661);
 		addChild(tf);
 		tf.x=(width-tf.width)/2
-		
 		_tField = new flash.text.TextField();
 		// Create default text format
 		var textFormat:TextFormat = new TextFormat("Arial", 24, 0x000000);
@@ -161,24 +168,28 @@ class AgeValidator extends Sprite{
 		_tField.height=40;
 		_tField.background = true;
 		_tField.border=true;
-		_tField.backgroundColor = 0xffffff;
+		_tField.borderColor = 0x002661;
+		//_tField.backgroundColor = 0x333333;
 		Starling.current.nativeOverlay.addChild(_tField);
-		_tField.visible=false;
-		_tField.x=(Dimentions.WIDTH-_tField.width)/2+52;
-		_tField.y=(Dimentions.HEIGHT-_tField.height)/2+12;
+		//_tField.visible=false;
+		_tField.x=(Dimentions.WIDTH-_tField.width)/2;
+		_tField.y=(Dimentions.HEIGHT-_tField.height)/2+30;
+		_tField.maxChars=4;
 		_tField.addEventListener(flash.events.Event.CHANGE,onGoodAnswer);
-		//addChild(_alert);
-		//_alert.x=(Dimentions.WIDTH-_alert.width)/2;
-		//_alert.y=(Dimentions.HEIGHT-_alert.height)/2;
 		
 	}
 	
 	protected function onGoodAnswer(event:flash.events.Event):void
 	{
 		// TODO Auto-generated method stub
-		if(_tField.text=="14"){
-			goodAnswer.dispatch();
+		if(int(_tField.text)>=1996 ){
 			confirmed = true;
+			goodAnswer.dispatch();
+		}
+		if(_tField.text=="alma"){
+			Session.fullVersionEnabled=true;
+			confirmed = true;
+			goodAnswer.dispatch();
 		}
 		
 	}

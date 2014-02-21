@@ -41,6 +41,10 @@ package com.view.components
 			for(var i:uint = 0;i<_screenThumbs.length;i++){
 				(_screenThumbs[i]).locked=false;
 			}
+			if(_store && _store.parent == this){
+				removeChild(_store);
+			}
+			_storeBtn.visible=false;
 			//_buyButton.visible = false//!Session.fullVersionEnabled;
 		}
 		
@@ -83,8 +87,6 @@ package com.view.components
 			if(!_store){
 				_store = new Store();
 				_store.goHome.add(function():void{
-					_store.stop();
-					//_store.visible = false
 					removeChild(_store);
 				});
 			}
