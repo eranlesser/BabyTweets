@@ -3,7 +3,7 @@ package com.model
 	//import com.freshplanet.nativeExtensions.Flurry;
 	
 	
-	import com.sticksports.nativeExtensions.flurry.Flurry;
+	import com.utils.Monotorizer;
 	
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -48,14 +48,14 @@ package com.model
 		
 		public static function set fullVersionEnabled(value:Boolean):void
 		{
-			Flurry.logEvent("fullVersionEnabled",{val:value});
+			Monotorizer.logEvent("fullVersionEnabled",value.toString());
 			_fullVersionEnabled = value;
 			exportSessionData();
 			changed.dispatch();
 		}
 		
 		public static function init():void{
-			var inputFile:File = File.documentsDirectory.resolvePath("babytweets/sessions/5_0.xml") ;
+			var inputFile:File = File.documentsDirectory.resolvePath("babytweets/sessions/5_0_DEV.xml") ;
 			if(inputFile.exists){
 				var inputStream:FileStream = new FileStream();
 				inputStream.open(inputFile, FileMode.READ);

@@ -5,7 +5,7 @@ package com.view.menu
 	import com.model.ScreensModel;
 	import com.model.Session;
 	import com.model.rawData.Texts;
-	import com.sticksports.nativeExtensions.flurry.Flurry;
+	import com.utils.Monotorizer;
 	import com.view.components.ScreensMenu;
 	
 	import org.osflash.signals.Signal;
@@ -99,7 +99,7 @@ package com.view.menu
 		}
 		
 		private function setState(stt:String):void{
-			Flurry.logEvent("configMenu",{state:stt});
+			Monotorizer.logEvent("configMenu",stt);
 			_navText.color = 0x002661;
 			_aboutText.color = 0x002661;
 			if(stt=="nav"){

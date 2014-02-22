@@ -24,7 +24,6 @@ package com.utils
 	import com.adobe.ane.productStore.Transaction;
 	import com.adobe.ane.productStore.TransactionEvent;
 	import com.model.Session;
-	import com.sticksports.nativeExtensions.flurry.Flurry;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -43,8 +42,8 @@ package com.utils
 		public function InApper()
 		{
 			productStore=new ProductStore();
-			Flurry.logEvent("productstore supported="+ProductStore.isSupported);
-			Flurry.logEvent("productstore available="+productStore.available);
+			Monotorizer.logEvent("productstore supported",ProductStore.isSupported.toString());
+			Monotorizer.logEvent("productstore available",productStore.available.toString());
 			get_Product();
 		}
 		
@@ -73,12 +72,6 @@ package com.utils
 			while(e.products && i < e.products.length)
 			{
 				var p:Product = e.products[i];
-				Flurry.logEvent("\nTITLE: " + p.title + "\nDescription: " + p.description + "\nIdentifier : " + p.identifier + "PriceLocale : " + p.priceLocale + "\nPrice: " + p.price);
-				trace("title : "+p.title);
-				trace("description: "+p.description);
-				trace("identifier: "+p.identifier);
-				trace("priceLocale: "+p.priceLocale);
-				trace("price :"+p.price);
 				i++;
 			}
 		}

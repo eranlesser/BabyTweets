@@ -1,7 +1,7 @@
 package com.view.components
 {
 	import com.model.Session;
-	import com.sticksports.nativeExtensions.flurry.Flurry;
+	import com.utils.Monotorizer;
 	
 	import starling.display.Button;
 	import starling.display.Sprite;
@@ -85,7 +85,7 @@ package com.view.components
 				}
 			}
 			
-			Flurry.logEvent("language=",{language:lang});
+			Monotorizer.logEvent("language",lang);
 		}
 		
 		private function onOpen(lang:String):void

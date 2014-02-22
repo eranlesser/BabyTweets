@@ -4,7 +4,7 @@ package com.controller
 	import com.model.ScreensModel;
 	import com.model.Session;
 	import com.model.rawData.WhereIsData;
-	import com.sticksports.nativeExtensions.flurry.Flurry;
+	import com.utils.Monotorizer;
 	import com.view.AbstractScreen;
 	import com.view.Baloons;
 	import com.view.Egg;
@@ -61,7 +61,7 @@ package com.controller
 			
 			removeScreen(_currentScreen);;
 			_currentScreen = addScreen(nextScreen);
-			Flurry.logEvent("gonext",{screen:nextScreen.folder});
+			Monotorizer.logEvent("gonext",nextScreen.folder);
 		}
 		
 		public function goTo(screenIndex:int):void{
@@ -74,7 +74,7 @@ package com.controller
 				removeScreen(_currentScreen);
 				_currentScreen = addScreen(nextScreen);
 			}
-			Flurry.logEvent("goto",{ screen : screenIndex});
+			Monotorizer.logEvent("goto",_screens.getScreenFolder(screenIndex));
 		}
 		
 		private function goHome():void{

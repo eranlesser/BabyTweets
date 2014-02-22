@@ -43,6 +43,13 @@ package com.model
 			return _screens[indx];
 		}
 		
+		public function getScreenFolder(indx:int):String{
+			if(!_screens[indx]){
+				return "";
+			}
+			return _screens[indx].folder;
+		}
+		
 		public function get screens():Vector.<ScreenModel>{
 			return _screens;
 		}
