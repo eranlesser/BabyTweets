@@ -182,7 +182,7 @@ class AgeValidator extends Sprite{
 	protected function onGoodAnswer(event:flash.events.Event):void
 	{
 		// TODO Auto-generated method stub
-		if(int(_tField.text)>=1996 ){
+		if(int(_tField.text)<=1996 && int(_tField.text)>=1800){
 			confirmed = true;
 			goodAnswer.dispatch();
 		}

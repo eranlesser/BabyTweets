@@ -31,12 +31,11 @@ package com.view.components
 		{
 			init(screens);
 			setSelectedScreen();
-			//Starling.juggler.delayCall(initIPurchases,3);
 		}
 		
 		
 		
-		public function onsessionChanged():void{
+		private function onsessionChanged():void{
 			trace("onsessionChanged","Session.fullVersionEnabled",Session.fullVersionEnabled)
 			for(var i:uint = 0;i<_screenThumbs.length;i++){
 				(_screenThumbs[i]).locked=false;
@@ -45,7 +44,6 @@ package com.view.components
 				removeChild(_store);
 			}
 			_storeBtn.visible=false;
-			//_buyButton.visible = false//!Session.fullVersionEnabled;
 		}
 		
 		private function init(screens:ScreensModel):void
@@ -79,7 +77,7 @@ package com.view.components
 				_storeBtn.fontSize=24;
 				_storeBtn.addEventListener(starling.events.Event.TRIGGERED,onStore);
 			}
-			
+			Session.changed.add(onsessionChanged);
 		}
 		private function onStore():void
 		{

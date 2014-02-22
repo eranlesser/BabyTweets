@@ -16,8 +16,6 @@ package com.view.menu
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.textures.Texture;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
 	
 	public class ConfigurationScreen extends Sprite
 	{
@@ -28,25 +26,18 @@ package com.view.menu
 		private var bg : 			Class;
 		[Embed(source="../../../assets/menu/screens.png")]
 		private var screens : 			Class;
+		
 		[Embed(source="../../../assets/menu/about.png")]
 		private var about : 			Class;
-		[Embed(source="../../../assets/about.png")]
-		private var aboutPng : Class;
-		[Embed(source="../../../assets/TexturePacker.png")]
-		private var tp : Class;
-		[Embed(source="../../../assets/starling.png")]
-		private var strlng : Class;
-
 		
 		public var goHome:Signal = new Signal();
 		private var _navText:TextField;
 		private var _aboutText:TextField;
 		private var _displayLayer:Sprite;
-		private var _aboutHeb:Sprite;
-		private var _about:TextField;
+		
 		private var _menu:ScreensMenu;
 		private var _texts:Texts;
-
+		private var _about:About;
 		public function ConfigurationScreen(screensModel:ScreensModel)
 		{
 			addChild(new Image(Texture.fromBitmap(new bg())));
@@ -57,11 +48,6 @@ package com.view.menu
 			
 			
 		}
-		
-		private function onsessionChanged():void{
-			_menu.onsessionChanged();
-		}
-		
 		
 		public function get menu():ScreensMenu{
 			return _menu;
@@ -95,6 +81,7 @@ package com.view.menu
 			_aboutText.touchable = false;
 			_aboutText.x = aboutButton.x;
 			_aboutText.y=_navText.y;
+			
 			Session.langChanged.add(setTexts);
 			if(Session.deviceId==2){
 				addChild(navButton);
@@ -102,8 +89,6 @@ package com.view.menu
 				addChild(_navText);
 				addChild(_aboutText);
 			}
-			
-			Session.changed.add(onsessionChanged);
 			setState("nav");
 		}
 		
@@ -115,46 +100,22 @@ package com.view.menu
 		
 		private function setState(stt:String):void{
 			Flurry.logEvent("configMenu",{state:stt});
-			_navText.color = 0x003B94;
-			_aboutText.color = 0x003B94;
-			switch(stt){
-				case "nav":
-						_navText.color = 0x002661;
-						//_navText.bold=true;
-						//_aboutText.bold=false;
-						_menu.visible = true;
-						if(_about)
-							_about.visible=false;
-						if(_aboutHeb)
-							_aboutHeb.visible=false;
-					break;
-				case "about":
-					if(Session.lang=="israel"){
-						if(!_aboutHeb){
-							_aboutHeb = new Sprite();
-							_aboutHeb.addChild(new Image(Texture.fromBitmap(new aboutPng())));
-							_aboutHeb.y=110;
-							addChild(_aboutHeb);
-						}
-						_aboutHeb.visible=true;
-					}else{
-						_about = new TextField(700,600,_texts.getAboutText(),"Verdana",18,0x2C3E50);
-						addChild(_about);
-						_about.y=140;
-						_about.vAlign = VAlign.TOP;
-						_about.hAlign = HAlign.LEFT;
-						_about.x=185;
-						_aboutText.visible=true;
-						_aboutText.color = 0x002661;
-					}
-					
-					//_aboutText.bold=true;
-					//_navText.bold=false;
-					_menu.visible = false;
-					
-					
-					break;
+			_navText.color = 0x002661;
+			_aboutText.color = 0x002661;
+			if(stt=="nav"){
+				_navText.color = 0x003B94;
+				_menu.visible = true;
+				if(_about){
+					_about.visible=false;
 				}
+			}else{
+				if(!_about){
+					_about = new About();
+					addChild(_about);
+				}
+				_aboutText.color=0x003B94;
+				_about.visible=true;
+				_menu.visible = false;
 			
 		}
 		
@@ -162,4 +123,57 @@ package com.view.menu
 	
 	}
 }
+}
+import com.model.Session;
+import com.model.rawData.Texts;
+
+import starling.display.Image;
+import starling.display.Sprite;
+import starling.text.TextField;
+import starling.textures.Texture;
+import starling.utils.HAlign;
+import starling.utils.VAlign;
+
+
+class About extends Sprite{
+	private var _aboutHeb:Sprite;
+	private var _about:TextField;
+	[Embed(source="../../../assets/about.png")]
+	private var aboutPng : Class;
+	public function About(){
+		init();
+	}
+	
+	private function init():void
+	{
+		// TODO Auto Generated method stub
+		_aboutHeb = new Sprite();
+		_aboutHeb.addChild(new Image(Texture.fromBitmap(new aboutPng())));
+		_aboutHeb.y=110;
+		addChild(_aboutHeb);
+		_about = new TextField(700,600,Texts.instance.getAboutText(),"Verdana",18,0x2C3E50);
+		addChild(_about);
+		_about.y=140;
+		_about.vAlign = VAlign.TOP;
+		_about.hAlign = HAlign.LEFT;
+		_about.x=185;
+		_about.visible=false;
+		_aboutHeb.visible=false;
+		Session.langChanged.add(setLang);
+		setLang();
+	}
+	
+	private function setLang():void{
+		if(Session.lang=="israel"){
+			_aboutHeb.visible=true;
+			_about.visible=false;
+		}else{
+			_about.text = Texts.instance.getAboutText();
+			_aboutHeb.visible=false;
+			_about.visible=true;
+			
+		}
+	}
+}
+
 
