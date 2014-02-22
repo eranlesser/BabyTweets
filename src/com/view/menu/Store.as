@@ -70,11 +70,12 @@ package com.view.menu
 			_ageValidator.x = (this.width - _ageValidator.width)/2;
 			_ageValidator.y=280;
 			_ageValidator.goodAnswer.add(setPurchaseState);
+			addEventListener(Event.ADDED_TO_STAGE,setPurchaseState);
 			initInapper();
 			setPurchaseState();
 		}
 		
-		private function setPurchaseState():void
+		private function setPurchaseState(e:Event=null):void
 		{
 			if(_ageValidator.confirmed){
 				_ageValidator.visible=false;
@@ -133,6 +134,7 @@ import org.osflash.signals.Signal;
 import starling.core.Starling;
 import starling.display.Image;
 import starling.display.Sprite;
+import starling.events.Event;
 import starling.text.TextField;
 import starling.textures.Texture;
 
@@ -154,13 +156,13 @@ class AgeValidator extends Sprite{
 	}
 	
 	private function init():void{
-		var tf:starling.text.TextField = new starling.text.TextField(400,100,"Please insert year of birth","verdana",24,0x002661);
+		var tf:starling.text.TextField = new starling.text.TextField(400,100,"Please insert year of birth","verdana",28,0x002661);
 		addChild(tf);
 		tf.x=(width-tf.width)/2
 		_tField = new flash.text.TextField();
 		// Create default text format
-		var textFormat:TextFormat = new TextFormat("Arial", 24, 0x000000);
-		textFormat.align = TextFormatAlign.LEFT;
+		var textFormat:TextFormat = new TextFormat("Arial", 28, 0x000000);
+		textFormat.align = TextFormatAlign.CENTER;
 		_tField.defaultTextFormat = textFormat;
 		// Set text input type
 		_tField.type = TextFieldType.INPUT;
@@ -176,7 +178,10 @@ class AgeValidator extends Sprite{
 		_tField.y=(Dimentions.HEIGHT-_tField.height)/2+30;
 		_tField.maxChars=4;
 		_tField.addEventListener(flash.events.Event.CHANGE,onGoodAnswer);
-		
+		addEventListener(starling.events.Event.REMOVED_FROM_STAGE,function(e:starling.events.Event):void{
+			_tField.visible=false;
+			_tField.text="";
+		});
 	}
 	
 	protected function onGoodAnswer(event:flash.events.Event):void

@@ -309,7 +309,8 @@
 
 <extensions>
         
-    <extensionID>com.sticksports.nativeExtensions.Flurry</extensionID>
+    
     <extensionID>com.adobe.ane.productStore</extensionID>
+    <extensionID>eu.alebianco.air.extensions.analytics.NativeGATracker</extensionID>
     </extensions>
 </application>

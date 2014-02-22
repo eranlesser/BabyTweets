@@ -55,7 +55,8 @@ package com.controller
 		private function goNext():void{
 			var nextScreen:ScreenModel = _screens.getNext();
 			if(!Session.fullVersionEnabled && !nextScreen.isFree){
-					goTo(-1)
+					//goTo(0)
+					openMenu();
 					return;
 			}
 			
@@ -64,16 +65,13 @@ package com.controller
 			Monotorizer.logEvent("gonext",nextScreen.folder);
 		}
 		
-		public function goTo(screenIndex:int):void{
+		private function goTo(screenIndex:int):void{
 			_app.screensLayer.removeChild(_configScr);
 			_navigator.visible=true;
 			var nextScreen:ScreenModel = _screens.getScreen(screenIndex)
-			if(!Session.fullVersionEnabled && !nextScreen.isFree){
-				goTo(0)
-			}else{
-				removeScreen(_currentScreen);
-				_currentScreen = addScreen(nextScreen);
-			}
+			
+			removeScreen(_currentScreen);
+			_currentScreen = addScreen(nextScreen);
 			Monotorizer.logEvent("goto",_screens.getScreenFolder(screenIndex));
 		}
 		
