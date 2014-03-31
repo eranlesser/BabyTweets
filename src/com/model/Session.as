@@ -22,7 +22,7 @@ package com.model
 		private static var _fullVersionEnabled:Boolean = false;
 		public static const inAppFullVersionId:String = "babyTweetsEn.fullVersion";
 		//public static const inAppFullVersionId:String = "babyTweetsHeb.fullVersion";
-		public static var deviceId:uint=1; // phone 1 , tablet 2
+		public static var deviceId:uint=2; // phone 1 , tablet 2
 		public function Session()
 		{
 		}
@@ -55,7 +55,7 @@ package com.model
 		}
 		
 		public static function init():void{
-			var inputFile:File = File.documentsDirectory.resolvePath("babytweets/sessions/5_0_DEV.xml") ;
+			var inputFile:File = File.documentsDirectory.resolvePath("babytweets/sessions/5_0.xml") ;
 			if(inputFile.exists){
 				var inputStream:FileStream = new FileStream();
 				inputStream.open(inputFile, FileMode.READ);
@@ -65,7 +65,6 @@ package com.model
 					_fullVersionEnabled = true;
 					changed.dispatch();
 				}
-				trace("sessionXML",sessionXML);
 			}
 		}
 		
