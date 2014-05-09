@@ -19,7 +19,7 @@ package com.view
 	{
 		
 		protected var _categorySound:		Sound;
-		protected var _particlesEffect:		ParticlesEffect;
+		//protected var _particlesEffect:		ParticlesEffect;
 		protected var _categorySoundPlaying:Boolean=false;
 		protected var _guiLayer:			Sprite;
 		protected var _screenLayer:			Sprite;
@@ -69,22 +69,25 @@ package com.view
 		}
 		
 		protected function closeCurtains():void{
-			_particlesEffect = new ParticlesEffect();
-			_particlesEffect.y = Dimentions.HEIGHT/2;
-			_particlesEffect.x=(Dimentions.WIDTH-_particlesEffect.width)/2;
-			_screenLayer.addChild(_particlesEffect);
-			_particlesEffect.start("drug");
+//			_particlesEffect = new ParticlesEffect();
+//			_particlesEffect.y = Dimentions.HEIGHT/2;
+//			_particlesEffect.x=(Dimentions.WIDTH-_particlesEffect.width)/2;
+//			_screenLayer.addChild(_particlesEffect);
+//			_particlesEffect.start("drug");
+			trace("closeCurtains");
 			
 		}
 		
 		
 		protected function dispatchDone():void{
 			done.dispatch();
-			if(_particlesEffect){
-				_particlesEffect.stop();
-				//removeChild(_particlesEffect);
-			}
+//			if(_particlesEffect){
+//				_particlesEffect.stop();
+//				//removeChild(_particlesEffect);
+//			}
 		}
+		
+		
 		
 		public function set isEnabled(bool:Boolean):void{
 			

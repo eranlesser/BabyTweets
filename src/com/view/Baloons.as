@@ -205,7 +205,7 @@ package com.view
 		}
 		
 		private function onLast():void{
-			closeCurtains();
+			//closeCurtains();
 			Starling.juggler.delayCall(super.dispatchDone,2);
 		}
 		

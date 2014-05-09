@@ -26,6 +26,7 @@ package com.view
 		public function WhereIsScreen(screenModel:ScreenModel)
 		{
 			super(screenModel);
+			
 		}
 		
 		override protected function init():void{

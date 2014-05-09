@@ -26,7 +26,6 @@ package com.utils
 	import com.model.Session;
 	
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
@@ -56,7 +55,6 @@ package com.utils
 
 		private function get_Product():void
 		{
-			trace("in get_Product");
 			productStore.addEventListener(ProductEvent.PRODUCT_DETAILS_SUCCESS,productDetailsSucceeded);
 			productStore.addEventListener(ProductEvent.PRODUCT_DETAILS_FAIL, productDetailsFailed);
 			
@@ -67,29 +65,27 @@ package com.utils
 		
 		public function productDetailsSucceeded(e:ProductEvent):void
 		{
-			trace("in productDetailsSucceeded "+e);
 			var i:uint=0;
 			while(e.products && i < e.products.length)
 			{
 				var p:Product = e.products[i];
 				i++;
+				Monotorizer.logEvent("inapper","productDetailsSucceeded "+p.identifier);
 			}
 		}
 		
 		public function productDetailsFailed(e:ProductEvent):void
 		{
-			trace("in productDetailsFailed"+e);
+			Monotorizer.logError("inapper","product detail failed");
 			var i:uint=0;
 			while(e.invalidIdentifiers && i < e.invalidIdentifiers.length)
 			{
-				trace(e.invalidIdentifiers[i]);
 				i++;
 			}
 		}
 		
 		public function purchase(product:String,quantety:uint):void
 		{
-			trace("purchase product...");
 			productStore.addEventListener(TransactionEvent.PURCHASE_TRANSACTION_SUCCESS, purchaseTransactionSucceeded);
 			productStore.addEventListener(TransactionEvent.PURCHASE_TRANSACTION_CANCEL, purchaseTransactionCanceled);
 			productStore.addEventListener(TransactionEvent.PURCHASE_TRANSACTION_FAIL, purchaseTransactionFailed);
@@ -100,13 +96,11 @@ package com.utils
 		protected function purchaseTransactionSucceeded(e:TransactionEvent):void
 		{
 			productStore.removeEventListener(TransactionEvent.PURCHASE_TRANSACTION_SUCCESS, purchaseTransactionSucceeded);
-			trace("in purchaseTransactionSucceeded" +e);
 			var i:uint=0;
 			var t:Transaction;
 			while(e.transactions && i < e.transactions.length)
 			{
 				t = e.transactions[i];
-				printTransaction(t);
 				i++;
 				var Base:Base64=new Base64();
 				var encodedReceipt:String = Base64.Encode(t.receipt);
@@ -117,26 +111,22 @@ package com.utils
 				var ldr:URLLoader = new URLLoader(req);
 				ldr.load(req);
 				ldr.addEventListener(Event.COMPLETE,function(e:Event):void{
-					trace("LOAD COMPLETE: " + ldr.data);
 					productStore.addEventListener(TransactionEvent.FINISH_TRANSACTION_SUCCESS, finishTransactionSucceeded);
 					productStore.finishTransaction(t.identifier);
 				});
 				
-				trace("Called Finish on/Finish Transaction " + t.identifier); 
 			}
+			finishTransactionSucceeded(null);
 			getPendingTransaction(productStore);
 		}
 		
 		protected function purchaseTransactionCanceled(e:TransactionEvent):void{
 			productStore.removeEventListener(TransactionEvent.PURCHASE_TRANSACTION_CANCEL, purchaseTransactionCanceled);
-			trace("in purchaseTransactionCanceled"+e);
 			var i:uint=0;
 			while(e.transactions && i < e.transactions.length)
 			{
 				var t:Transaction = e.transactions[i];
-				printTransaction(t);
 				i++;
-				trace("FinishTransactions >>purchaseTransactionCanceled" + t.identifier);
 				productStore.finishTransaction(t.identifier);
 			}
 			getPendingTransaction(productStore);
@@ -145,14 +135,11 @@ package com.utils
 		protected function purchaseTransactionFailed(e:TransactionEvent):void
 		{
 			productStore.removeEventListener(TransactionEvent.PURCHASE_TRANSACTION_FAIL, purchaseTransactionFailed);
-			trace("in purchaseTransactionFailed"+e);
 			var i:uint=0;
 			while(e.transactions && i < e.transactions.length)
 			{
 				var t:Transaction = e.transactions[i];
-				printTransaction(t);
 				i++;
-				trace("FinishTransactions" + t.identifier);
 				productStore.finishTransaction(t.identifier);
 			}
 			
@@ -160,12 +147,10 @@ package com.utils
 		}
 		
 		protected function finishTransactionSucceeded(e:TransactionEvent):void{
-			trace("in finishTransactionSucceeded" +e);
 			var i:uint=0;
 			while(e.transactions && i < e.transactions.length)
 			{
 				var t:Transaction = e.transactions[i];
-				printTransaction(t);
 				i++;
 			}
 			if(i>=1){
@@ -175,7 +160,6 @@ package com.utils
 		
 		public function restoreTransactions():void
 		{
-			trace("in restore_Transactions");
 			productStore.addEventListener(TransactionEvent.RESTORE_TRANSACTION_SUCCESS, restoreTransactionSucceeded);
 			productStore.addEventListener(TransactionEvent.RESTORE_TRANSACTION_FAIL, restoreTransactionFailed);
 			productStore.addEventListener(TransactionEvent.RESTORE_TRANSACTION_COMPLETE,  restoreTransactionCompleted);
@@ -184,61 +168,39 @@ package com.utils
 		}
 		
 		protected function restoreTransactionSucceeded(e:TransactionEvent):void{
-			trace("in restoreTransactionSucceeded" +e);
 			var i:uint=0;
 			while(e.transactions && i < e.transactions.length)
 			{
 				var t:Transaction = e.transactions[i];
-				printTransaction(t);
 				i++;
 				
-				trace("FinishTransactions" + t.identifier);
 				productStore.addEventListener(TransactionEvent.FINISH_TRANSACTION_SUCCESS, finishTransactionSucceeded);
 				productStore.finishTransaction(t.identifier);
 			}
-			
+			finishTransactionSucceeded(null);
 			getPendingTransaction(productStore);
 		}
 		
 		protected function restoreTransactionFailed(e:TransactionEvent):void{
-			trace("in restoreTransactionFailed" +e);
+			trace("in restoreTransactionFailed  " +e);
 		}
 		
 		protected function restoreTransactionCompleted(e:TransactionEvent):void{
-			trace("in restoreTransactionCompleted" +e);
+			trace("in restoreTransactionCompleted  " +e);
 		}
 		
-		protected function pending_transaction(event:MouseEvent):void
-		{
-			getPendingTransaction(productStore);
-		}
 		
-		public function getPendingTransaction(prdStore:ProductStore):void
+		private function getPendingTransaction(prdStore:ProductStore):void
 		{
-			trace("pending transaction");
 			var transactions:Vector.<Transaction> = prdStore.pendingTransactions; 
 			var i:uint=0;
 			while(transactions && i<transactions.length)
 			{
 				var t:Transaction = transactions[i];
-				printTransaction(t);
 				i++;
 			}
 		}
 		
-		public function printTransaction(t:Transaction):void
-		{
-			trace("-------------------in Print Transaction----------------------");
-			trace("identifier :"+t.identifier);
-			trace("productIdentifier: "+ t.productIdentifier);
-			trace("productQuantity: "+t.productQuantity);
-			trace("date: "+t.date);
-			trace("receipt: "+t.receipt);
-			trace("error: "+t.error);
-			trace("originalTransaction: "+t.originalTransaction);
-			if(t.originalTransaction)
-				printTransaction(t.originalTransaction);
-			trace("---------end of print transaction----------------------------");
-		}		
+			
 	}
 }

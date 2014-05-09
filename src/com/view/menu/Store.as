@@ -4,6 +4,7 @@ package com.view.menu
 	import com.model.Session;
 	import com.utils.InAppPurchaser;
 	import com.utils.InApper;
+	import com.utils.Monotorizer;
 	
 	import org.osflash.signals.Signal;
 	
@@ -21,8 +22,8 @@ package com.view.menu
 	private var btn : 			Class;
 	[Embed(source="../../../assets/menu/bg.png")]
 	private var bg : 			Class;
-	[Embed(source="../../../assets/menu/whiteBg.png")]
-	private var whiteBg : 			Class;
+	[Embed(source="../../../assets/home/home.png")]
+	private var home : 			Class;
 
 	private var _inApper:InAppPurchaser;
 	private var _ageValidator:AgeValidator;
@@ -40,7 +41,7 @@ package com.view.menu
 			// TODO Auto Generated method stub
 			var bgr:Image = new Image(Texture.fromBitmap(new bg()));
 			addChild(bgr);
-			var miniBg:Image = addChild(new Image(Texture.fromBitmap(new whiteBg()))) as Image; 
+			var homebg:Image = addChild(new Image(Texture.fromBitmap(new home()))) as Image; 
 			var homeBut:Button = new Button( Texture.fromBitmap(new wBird()) );
 			addChild(homeBut);
 			homeBut.x=8;
@@ -65,8 +66,6 @@ package com.view.menu
 			_restore.addEventListener(starling.events.Event.TRIGGERED,onRestoreClicked);
 			_ageValidator = new AgeValidator();
 			addChild(_ageValidator);
-			miniBg.x= (Dimentions.WIDTH-miniBg.width)/2
-			miniBg.y= (Dimentions.HEIGHT-miniBg.height)/2
 			_ageValidator.x = (this.width - _ageValidator.width)/2;
 			_ageValidator.y=280;
 			_ageValidator.goodAnswer.add(setPurchaseState);
@@ -90,7 +89,9 @@ package com.view.menu
 		private function onInApperEvent(eventType:String,data:Object=null):void{
 			switch(eventType){
 				case InApper.PRODUCT_TRANSACTION_SUCCEEDED:
+					_inApper.signal.remove(onInApperEvent);
 					Session.fullVersionEnabled=true;
+					Monotorizer.logEvent("store","fullversionenabled",1);
 					break;
 				//				case InApper.PRODUCT_RESTORE_SUCCEEDED:
 				//					Session.fullVersionEnabled=true;
@@ -99,12 +100,11 @@ package com.view.menu
 		}
 		private function onRestoreClicked(e:Event):void{
 			
-			_inApper.signal.addOnce(onInApperEvent);
+			
 			_inApper.restoreTransactions();
 		}
 		
 		private function buyFullVersion():void{
-			_inApper.signal.addOnce(onInApperEvent);
 			//_inApper.purchase("babyTweetsHeb.fullVersion",1);
 			_inApper.purchase(Session.inAppFullVersionId,1);
 		}
@@ -113,6 +113,7 @@ package com.view.menu
 			if(!_inApper){
 				if(Session.OS=="IOS"){
 					_inApper = new InApper();
+					_inApper.signal.add(onInApperEvent);
 				}else{
 					//_inApper = new InApperAndroid();
 				}
@@ -136,7 +137,6 @@ import starling.display.Image;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.text.TextField;
-import starling.textures.Texture;
 
 class AgeValidator extends Sprite{
 	

@@ -43,7 +43,7 @@ package com.view.components
 		}
 		
 		public static function getLanguageFromLocale(lang:String):String{
-			var str:String=ISRAEL;
+			var str:String=USA;
 			switch(lang){
 				case "en":
 					str=USA;

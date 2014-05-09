@@ -95,7 +95,7 @@ package com.view
 					soundPlayer.getSound("../../../assets/narration","/counter/14.mp3").play();
 					Starling.juggler.delayCall(dispatchDone,2.5);
 				},1);
-				closeCurtains();
+				//closeCurtains();
 				isEnabled=false;
 				if(_chnl){
 					_chnl.stop();

@@ -98,7 +98,7 @@ package com.view
 		}
 		
 		private function finish():void{
-			closeCurtains();
+			//closeCurtains();
 			Starling.juggler.delayCall(dispatchDone,2);
 //			var counter:uint = 0;
 //			_hinter = Starling.juggler.delayCall(

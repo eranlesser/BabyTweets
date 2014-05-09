@@ -109,7 +109,7 @@ package com.view
 			_egg.y=(Dimentions.HEIGHT-_egg.height)/2
 			if(_curFrame == 3){
 				Starling.juggler.delayCall(function():void{dispatchDone()},3);
-				closeCurtains();
+				//closeCurtains();
 				isEnabled=false;
 			}
 		}
