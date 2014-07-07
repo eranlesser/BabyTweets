@@ -14,6 +14,7 @@ package com.model.rawData
 		private var _engTexts:Dictionary = new Dictionary();
 		private var _frTexts:Dictionary = new Dictionary();
 		private var _ruTexts:Dictionary = new Dictionary();
+		private var _swTexts:Dictionary = new Dictionary();
 		private  static var  _instance:Texts;
 		public function Texts(enforcer:SingeltonEnforcer)
 		{
@@ -66,6 +67,9 @@ package com.model.rawData
 					break;
 				case FlagsMenu.RUSSIA:
 					dict = _ruTexts;
+					break;
+				case FlagsMenu.SWEDEN:
+					dict = _swTexts;
 					break;
 			}
 			return dict;

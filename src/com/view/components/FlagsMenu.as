@@ -28,6 +28,7 @@ package com.view.components
 		public static var USA	:String="usa";
 		public static var ISRAEL:String="israel";
 		public static var FRANCE:String="france";
+		public static var SWEDEN:String="sweden";
 		
 		public function FlagsMenu(lang:String)
 		{
@@ -56,6 +57,9 @@ package com.view.components
 					break;
 				case "he":
 					str=ISRAEL;
+					break;
+				case "sw":
+					str=SWEDEN;
 					break;
 				
 			}
@@ -112,7 +116,7 @@ package com.view.components
 			addFlag(ISRAEL);
 			addFlag(RUSSIA);
 			addFlag(USA);
-			//addFlag("brazil");
+			addFlag(SWEDEN);
 			addFlag(FRANCE);
 			//addFlag("holland");
 		}

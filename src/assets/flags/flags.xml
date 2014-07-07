@@ -7,4 +7,5 @@
     <SubTexture name="israel" x="2" y="2" width="200" height="145"/>
     <SubTexture name="russia" x="2" y="149" width="200" height="133"/>
     <SubTexture name="usa" x="204" y="144" width="200" height="133"/>
+     <SubTexture name="sweden" x="204" y="284" width="200" height="126"/>
 </TextureAtlas>
