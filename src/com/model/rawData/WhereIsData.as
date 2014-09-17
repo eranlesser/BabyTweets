@@ -16,7 +16,6 @@ package com.model.rawData
 			{Animals2.data}
 			{AnimalCards2.data}
 			{Animals3.data}
-			{Transportation.data}
 			{RainData.data}
 			{BathRoom.data}
 			{Musicians.data}

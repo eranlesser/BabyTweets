@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/14.0">
+<application xmlns="http://ns.adobe.com/air/application/15.0">
 
 <!-- Adobe AIR Application Descriptor File Template.
 
@@ -131,7 +131,7 @@
 	<!-- Only these languages can be specified -->
 	<!-- <supportedLanguages>en de cs es fr it ja ko nl pl pt ru sv tr zh</supportedLanguages> -->
 <!-- <supportedLanguages>en de cs es fr it ja ko nl pl pt ru sv tr zh</supportedLanguages> -->
-<supportedLanguages>en fr ru</supportedLanguages>
+<supportedLanguages>en fr ru sv</supportedLanguages>
 	<!-- The icon the system uses for the application. For at least one resolution,
 	specify the path to a PNG file included in the AIR package. Optional. -->
 	 <icon>

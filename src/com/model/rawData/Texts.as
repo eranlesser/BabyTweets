@@ -35,6 +35,12 @@ package com.model.rawData
 			_hebTexts["about"]="אודות";
 			_hebTexts["menu"]="תפריט";
 			_hebTexts["title"]="ציוצים ראשונים";
+			
+			_swTexts["nav"]="meny";
+			_swTexts["about"]="om";
+			_swTexts["menu"]="skärmar";
+			_swTexts["title"]="Mina första ord";
+			
 			_engTexts["nav"]="Screens";
 			_engTexts["about"]="About";
 			_engTexts["menu"]="MENU";
