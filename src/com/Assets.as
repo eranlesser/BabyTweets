@@ -33,10 +33,7 @@ package com
 		[Embed(source="../assets/fruitsAndVeg/atlas.png")]
 		public static const fruitsAndVeg:Class;
 
-		[Embed(source="../assets/music/atlas.xml", mimeType="application/octet-stream")]
-		public static const music_xml:Class;
-		[Embed(source="../assets/music/atlas.png")]
-		public static const music:Class;
+	
 		
 		[Embed(source="../assets/playroom/atlas.xml", mimeType="application/octet-stream")]
 		public static const playRoom_xml:Class;

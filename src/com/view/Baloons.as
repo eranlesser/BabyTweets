@@ -2,7 +2,6 @@ package com.view
 {
 	import com.Dimentions;
 	import com.model.ScreenModel;
-	import com.view.playRoom.Baloon;
 	import com.view.utils.SoundPlayer;
 	
 	import flash.display.Stage;
@@ -239,7 +238,6 @@ package com.view
 import com.view.Baloons;
 import com.view.components.ParticlesEffect;
 import com.view.playRoom.PlayItem;
-import com.view.utils.SoundPlayer;
 
 import flash.media.Sound;
 import flash.net.URLRequest;
@@ -255,12 +253,10 @@ import nape.space.Space;
 import org.osflash.signals.Signal;
 
 import starling.core.Starling;
-import starling.display.Button;
 import starling.display.Image;
 import starling.display.Sprite;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
-import starling.textures.Texture;
 
 
 class ColoredBaloon extends PlayItem{
