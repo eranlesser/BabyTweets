@@ -43,7 +43,8 @@ package com.model
 		
 		public static function get fullVersionEnabled():Boolean
 		{
-			return _fullVersionEnabled;
+			//**********************
+			return false;//_fullVersionEnabled;
 		}
 
 		

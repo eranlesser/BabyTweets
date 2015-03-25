@@ -51,7 +51,7 @@ package com.view
 			addChild(_cloud);
 			_cloud.x=(Dimentions.WIDTH-_cloud.width)/2;
 			_cloud.y=20;//(Dimentions.HEIGHT-_cloud.height)/4;
-			_cloud.addEventListener(TouchEvent.TOUCH,onCloudTouch);
+			addEventListener(TouchEvent.TOUCH,onCloudTouch);
 			_rain = new Image(Texture.fromBitmap(new rain()));
 			_rain.x=(Dimentions.WIDTH-_rain.width)/2;
 			_rain.y=_cloud.y+_cloud.height;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/15.0">
+<application xmlns="http://ns.adobe.com/air/application/3.4">
 
 <!-- Adobe AIR Application Descriptor File Template.
 
@@ -17,7 +17,9 @@
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
 	  <!--<id>com.babytweets.heb</id> --> 
 	 <!-- <id>com.whereIs.dev</id>  -->
-	  <id>com.pamtam.babytweets</id> <!--  BabyTweetsEn provisioning profile--> 
+	 <!--  <id>com.pamtam.babytweets</id>  BabyTweetsEn provisioning profile--> 
+	  <id>com.babytweets.AR</id> <!--  AR provisioning profile--> 
+	  
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>Baby Tweets</filename>
@@ -308,8 +310,8 @@
 
 
 
+
 <extensions>
         <extensionID>com.adobe.ane.productStore</extensionID>
-    <extensionID>com.sticksports.nativeExtensions.Flurry</extensionID>
     </extensions>
 </application>

@@ -18,17 +18,19 @@ package com.view.menu
 	{
 		[Embed(source="../../../assets/confBut.png")]
 		private var wBird : 			Class;
-	[Embed(source="../../../assets/store/bgg.png")]
+	[Embed(source="../../../assets/greenBg.png")]
 	private var btn : 			Class;
 	[Embed(source="../../../assets/menu/bg.png")]
 	private var bg : 			Class;
 	[Embed(source="../../../assets/home/home.png")]
 	private var home : 			Class;
-
+	[Embed(source="../../../assets/Board.png")]
+	private var board : 			Class;
 	private var _inApper:InAppPurchaser;
 	private var _ageValidator:AgeValidator;
 	private var _purchase:Button;
 	private var _restore:Button;
+	private var _board:Image;
 	public var goHome:Signal = new Signal();
 		public function Store()
 		{
@@ -49,19 +51,26 @@ package com.view.menu
 			homeBut.addEventListener(starling.events.Event.TRIGGERED, function():void{
 				goHome.dispatch()
 			});
+			_board = new Image(Texture.fromBitmap(new board()));
+			addChild(_board);
+			_board.alpha = 0.7;
+			_board.y = (Dimentions.HEIGHT - _board.height)/2
+			_board.x = (Dimentions.WIDTH - _board.width)/2
 			_purchase = new Button(Texture.fromBitmap(new btn()),"Buy");
-			_purchase.fontColor = 0xFFFFFF;
+			_purchase.fontColor = 0x285402;
 			addChild(_purchase);
 			_purchase.x=Dimentions.WIDTH/2-_purchase.width-22;;
-			_purchase.y=Dimentions.HEIGHT/2-_purchase.height; // iphone 100 , ipad 72
+			_purchase.y=Dimentions.HEIGHT/2-_purchase.height/2; // iphone 100 , ipad 72
 			_purchase.fontSize=24;
+			_purchase.fontBold = true;
 			_purchase.addEventListener(starling.events.Event.TRIGGERED,buyFullVersion);
 			
 			_restore = new Button(Texture.fromBitmap(new btn()),"Restore Purchase");
-			_restore.fontColor = 0xFFFFFF;
+			_restore.fontColor = 0x285402;
+			_restore.fontBold = true;
 			addChild(_restore);
 			_restore.x=Dimentions.WIDTH/2+22;;
-			_restore.y=Dimentions.HEIGHT/2-_restore.height; // iphone 100 , ipad 72
+			_restore.y=Dimentions.HEIGHT/2-_restore.height/2; // iphone 100 , ipad 72
 			_restore.fontSize=24;
 			_restore.addEventListener(starling.events.Event.TRIGGERED,onRestoreClicked);
 			_ageValidator = new AgeValidator();
@@ -123,6 +132,7 @@ package com.view.menu
 }
 import com.Dimentions;
 import com.model.Session;
+import com.model.rawData.Texts;
 
 import flash.events.Event;
 import flash.text.TextField;
@@ -156,7 +166,7 @@ class AgeValidator extends Sprite{
 	}
 	
 	private function init():void{
-		var tf:starling.text.TextField = new starling.text.TextField(400,100,"Please insert year of birth","verdana",28,0x002661);
+		var tf:starling.text.TextField = new starling.text.TextField(450,100,Texts.instance.getText("birthday"),"Verdana",32,0x285402);
 		addChild(tf);
 		tf.x=(width-tf.width)/2
 		_tField = new flash.text.TextField();
@@ -182,6 +192,12 @@ class AgeValidator extends Sprite{
 			_tField.visible=false;
 			_tField.text="";
 		});
+		
+		Session.langChanged.add(
+			function setText():void{
+				tf.text = Texts.instance.getText("birthday");
+			}
+		)
 	}
 	
 	protected function onGoodAnswer(event:flash.events.Event):void

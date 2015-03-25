@@ -15,6 +15,7 @@ package com.model.rawData
 		private var _frTexts:Dictionary = new Dictionary();
 		private var _ruTexts:Dictionary = new Dictionary();
 		private var _swTexts:Dictionary = new Dictionary();
+		private var _jrTexts:Dictionary = new Dictionary();
 		private  static var  _instance:Texts;
 		public function Texts(enforcer:SingeltonEnforcer)
 		{
@@ -31,32 +32,56 @@ package com.model.rawData
 		
 		
 		private function init():void{
-			_hebTexts["nav"]="תפריט";
-			_hebTexts["about"]="אודות";
-			_hebTexts["menu"]="תפריט";
+			//_hebTexts["nav"]="תפריט";
+			//_hebTexts["about"]="אודות";
+			//_hebTexts["play"]="משחק";
+			//_swTexts["nav"]="meny";
+			//_swTexts["about"]="om";
+			//_engTexts["nav"]="Screens";
+			//_engTexts["about"]="About";
+			//_engTexts["play"]="PLAY";
+			//_frTexts["play"]="PLAY";
+			//_frTexts["about"]="About";
+			//_frTexts["nav"]="Screens";
+			//_ruTexts["play"]="PLAY";
+			//_ruTexts["about"]="About";
+			//_ruTexts["nav"]="Screens";
+			//_jrTexts["nav"]="Screens";
+			//_jrTexts["about"]="About";
+			//_jrTexts["play"]="PLAY";
+			
+
+			//_hebTexts["menu"]="תפריט";
 			_hebTexts["title"]="ציוצים ראשונים";
+			_hebTexts["birthday"]="הקלידו שנת לידה";
 			
-			_swTexts["nav"]="meny";
-			_swTexts["about"]="om";
-			_swTexts["menu"]="skärmar";
+			//_swTexts["menu"]="skärmar";
 			_swTexts["title"]="Mina första ord";
+			_swTexts["birthday"]="Please insert year of birth";
 			
-			_engTexts["nav"]="Screens";
-			_engTexts["about"]="About";
-			_engTexts["menu"]="MENU";
-			_frTexts["menu"]="MENU";
-			_ruTexts["menu"]="MENU";
+			//_engTexts["menu"]="MENU";
 			_engTexts["title"]="Baby Tweets";
+			_engTexts["birthday"]="Please insert year of birth";
+			
+			//_frTexts["menu"]="MENU";
 			_frTexts["title"]="Mes premiers mots";
+			_frTexts["birthday"]="Please insert year of birth";
+
+			//_ruTexts["menu"]="MENU";
 			_ruTexts["title"]="Детский щебет";
-			_hebTexts["play"]="משחק";
-			_engTexts["play"]="PLAY";
-			_frTexts["play"]="PLAY";
-			_ruTexts["play"]="PLAY";
-			_frTexts["about"]="About";
-			_ruTexts["about"]="About";
-			_frTexts["nav"]="Screens";
-			_ruTexts["nav"]="Screens";
+			_ruTexts["birthday"]="Please insert year of birth";
+			
+			//_jrTexts["menu"]="MENU";
+			_jrTexts["title"]="تغريدات الأطفال";
+			_jrTexts["birthday"]="الرجاء إدخال سنة الولادة";
+			
+		}
+		
+		public function getTitleSize(lang:String):int{
+			if(lang==FlagsMenu.JORDAN || lang==FlagsMenu.ISRAEL){
+				return 60;
+			}
+			return 52;
 		}
 		
 		private function getDictionarr(lang:String):Dictionary{
@@ -77,6 +102,9 @@ package com.model.rawData
 				case FlagsMenu.SWEDEN:
 					dict = _swTexts;
 					break;
+				case FlagsMenu.JORDAN:
+					dict = _jrTexts;
+					break;
 			}
 			return dict;
 		}
@@ -87,15 +115,17 @@ package com.model.rawData
 				var locale:String = languageSettings[0].toString().toLowerCase();
 				Session.lang = FlagsMenu.getLanguageFromLocale(locale);
 			}
-			if(Session.lang==FlagsMenu.ISRAEL){
+			if(Session.lang==FlagsMenu.ISRAEL ){
 				return flip(_hebTexts[id]);
+			}else if(Session.lang==FlagsMenu.JORDAN){
+				return flip(_jrTexts[id]);
 			}else{
 				return getDictionarr(Session.lang)[id];
 			}
 		}
 		
 		private function flip(str:String):String{
-			if(Session.lang!=FlagsMenu.ISRAEL){
+			if(Session.lang!=FlagsMenu.ISRAEL || Session.lang!=FlagsMenu.JORDAN){
 				return str;
 			}
 			var newStr:String = "";
@@ -124,13 +154,6 @@ package com.model.rawData
 			return txt;
 		}
 		
-		public function getMenuTextSize():uint{
-			if(Session.lang==FlagsMenu.ISRAEL){
-				return 18;
-			}else{
-				return 14;
-			}
-		}
 		
 	}
 }

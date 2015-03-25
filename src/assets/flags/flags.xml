@@ -8,4 +8,5 @@
     <SubTexture name="russia" x="2" y="149" width="200" height="133"/>
     <SubTexture name="usa" x="204" y="144" width="200" height="133"/>
      <SubTexture name="sweden" x="204" y="284" width="200" height="126"/>
+     <SubTexture name="jordan" x="2" y="420" width="200" height="130"/>
 </TextureAtlas>

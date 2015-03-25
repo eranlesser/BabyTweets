@@ -1,6 +1,5 @@
 package com.utils
 {
-	import com.sticksports.nativeExtensions.flurry.Flurry;
 	
 	public class Monotorizer
 	{
@@ -12,7 +11,7 @@ package com.utils
 		
 		private static function init():void{
 			if(!_inited){
-				Flurry.startSession("MRGRZM7YSBQK5FQ3FFVC");
+				//Flurry.startSession("MRGRZM7YSBQK5FQ3FFVC");
 			}
 			_inited = true;
 		}
@@ -20,7 +19,7 @@ package com.utils
 		public static function logEvent(category:String,action:String,value:int=-100):void{
 			init();
 			try{
-				Flurry.logEvent(category+"_"+action,{param:value});
+				//Flurry.logEvent(category+"_"+action,{param:value});
 			}catch(e:Error){}
 		}
 		
@@ -28,7 +27,7 @@ package com.utils
 			
 			init();
 			try{
-				Flurry.logError(errorId,description);
+				//Flurry.logError(errorId,description);
 			}catch(e:Error){}
 		}
 		

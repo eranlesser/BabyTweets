@@ -59,10 +59,10 @@ package com.view.playRoom
 		}
 		private function dropped(x:int,y:int,item:MenuItem):void{
 			item.resetPosition();
-			if(y>620){
+			if(y>700){
 				return;
 			}
-			itemDropped.dispatch(x,y,item.id);
+			itemDropped.dispatch(x,Math.min(y,620),item.id);
 			if(item.recycled){
 				
 			}else{

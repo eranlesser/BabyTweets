@@ -29,6 +29,7 @@ package com.view.components
 		public static var ISRAEL:String="israel";
 		public static var FRANCE:String="france";
 		public static var SWEDEN:String="sweden";
+		public static var JORDAN:String="jordan";
 		
 		public function FlagsMenu(lang:String)
 		{
@@ -44,7 +45,8 @@ package com.view.components
 		}
 		
 		public static function getLanguageFromLocale(lang:String):String{
-			var str:String=USA;
+			var str:String=JORDAN;
+			/*
 			switch(lang){
 				case "en":
 					str=USA;
@@ -61,8 +63,12 @@ package com.view.components
 				case "sw":
 					str=SWEDEN;
 					break;
+				case "jr":
+					str=JORDAN;
+					break;
 				
 			}
+			*/
 			return str;
 		}
 		
@@ -118,6 +124,7 @@ package com.view.components
 			addFlag(USA);
 			addFlag(SWEDEN);
 			addFlag(FRANCE);
+			addFlag(JORDAN);
 			//addFlag("holland");
 		}
 		private var _hgt:uint=0;

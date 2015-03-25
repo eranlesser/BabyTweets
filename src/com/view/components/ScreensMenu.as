@@ -7,6 +7,8 @@ package com.view.components
 	import com.model.Session;
 	import com.view.menu.Store;
 	
+	import flash.geom.Rectangle;
+	
 	import org.osflash.signals.Signal;
 	
 	import starling.display.Button;
@@ -19,18 +21,26 @@ package com.view.components
 	
 	public class ScreensMenu extends Sprite
 	{
-		[Embed(source="../../../assets/store/bgg.png")]
-		private var btn : 			Class;
 		private var _screenThumbs:Vector.<ThumbNail> = new Vector.<ThumbNail>();
 		private var _thumbs:Sprite;
 		public var gotoSignal:Signal = new Signal();
 		private var _storeBtn:Button;
 		private var _store:Store;
 		
+		[Embed(source="../../../assets/unlock.png")]
+		private var unlock : 			Class;
+		
+		[Embed(source="../../../assets/menu/about.png")]
+		private var about : 			Class;
+		
 		public function ScreensMenu(screens:ScreensModel)
 		{
+			_thumbs = new Sprite();
+			addChild(_thumbs);
+			screens.changed.add(init);
+			initFullVersionBtn();
+			Session.changed.add(onsessionChanged);
 			init(screens);
-			setSelectedScreen();
 		}
 		
 		
@@ -48,16 +58,18 @@ package com.view.components
 		
 		private function init(screens:ScreensModel):void
 		{
-			_thumbs = new Sprite();
-			addChild(_thumbs);
+			
 			var i:int=0;
 			var n:int=0;
 			var wdt:uint=170;
 			var hgt:uint=136;
 			var gap:uint=12;
+			var menuThmb:ThumbNail;
+			_thumbs.removeChildren(0,-1,true);
+			_screenThumbs = new Vector.<ThumbNail>();
 			for each(var screen:ScreenModel in screens.screens){
 				if(screen.thumbNail!=""){
-					var menuThmb:ThumbNail = new ThumbNail(Assets.getAtlas("thumbs").getTexture(screen.thumbNail),i);
+					menuThmb = new ThumbNail(Assets.getAtlas("thumbs").getTexture(screen.thumbNail),i);
 					_screenThumbs.push(menuThmb);
 					menuThmb.x = (n%4)*wdt + (n%4)*gap;//menuThmb.x-5;
 					menuThmb.y = Math.floor(n/4)*(hgt+gap)+110;//menuThmb.y-5;
@@ -68,16 +80,19 @@ package com.view.components
 				i++;
 			}//for
 			_thumbs.x=(Dimentions.WIDTH - _thumbs.width)/2
+			setSelectedScreen();
+			
+		}
+		
+		private function initFullVersionBtn():void{
 			if(Session.fullVersionEnabled==false){
-				_storeBtn = new Button(Texture.fromBitmap(new btn()),"Full Version");
-				_storeBtn.fontColor = 0xFFFFFF;
+				var btnUpState:Texture = Texture.fromBitmap(new unlock())
+				_storeBtn = new Button(btnUpState);
 				addChild(_storeBtn);
-				_storeBtn.x=740;
-				_storeBtn.y=30; // iphone 100 , ipad 72
-				_storeBtn.fontSize=24;
+				_storeBtn.x= Dimentions.WIDTH - _storeBtn.width -5;
+				_storeBtn.y=10; // iphone 100 , ipad 72
 				_storeBtn.addEventListener(starling.events.Event.TRIGGERED,onStore);
 			}
-			Session.changed.add(onsessionChanged);
 		}
 		private function onStore():void
 		{
@@ -108,7 +123,7 @@ package com.view.components
 		
 		public function setSelectedScreen():void{
 			for(var i:uint = 0;i<_screenThumbs.length;i++){ // subtract restore btn
-				if(i>Session.FREE_THUMBS_COUNT-1 && !Session.fullVersionEnabled){//apply lock
+				if(i>Session.FREE_THUMBS_COUNT-1 && i != _screenThumbs.length-1 && !Session.fullVersionEnabled){//apply lock
 					(_screenThumbs[i]).locked=true;
 				}else{
 					(_screenThumbs[i]).locked=false;

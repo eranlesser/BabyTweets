@@ -69,8 +69,8 @@ package com.view
 		}
 		
 		private function addTitleText():void{
-			_titleText = new TextField(550,100,_texts.getText("title"),"Verdana",52,0x002661);
-			addChild(_titleText);
+			_titleText = new TextField(550,100,_texts.getText("title"),"Verdana",_texts.getTitleSize(Session.lang),0x285402);
+			_screenLayer.addChild(_titleText);
 			_titleText.autoSize =  TextFieldAutoSize.CENTER;
 			_titleText.x=Dimentions.WIDTH-_titleText.width//+20;
 			_titleText.y=318;
@@ -89,6 +89,7 @@ package com.view
 		
 		private function onSessionLanguageChanged():void{
 			_titleText.text = _texts.getText("title");
+			_titleText.fontSize = _texts.getTitleSize(Session.lang)
 			_titleText.x = Dimentions.WIDTH-_titleText.width;
 		}
 		

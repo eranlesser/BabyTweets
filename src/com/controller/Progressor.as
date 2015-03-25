@@ -76,10 +76,10 @@ package com.controller
 		}
 		
 		private function goHome():void{
-			_navigator.visible=true;
 			_app.screensLayer.removeChild(_configScr);
 			_app.screensLayer.addChild(_homeScreen);
 			_currentScreen = _homeScreen;
+			_navigator.visible = false;
 		}
 		
 		

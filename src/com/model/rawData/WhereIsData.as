@@ -23,6 +23,7 @@ package com.model.rawData
 			{Vegies.data}
 			{AnimalsI.data}
 			{Fruits.data}
+			{Transportation.data}
 			{PlayRoomData.data}
 
 			
