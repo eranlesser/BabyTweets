@@ -1,5 +1,7 @@
 package com.utils
 {
+	import com.freshplanet.nativeExtensions.Flurry;
+	import com.model.Session;
 	
 	public class Monotorizer
 	{
@@ -11,7 +13,12 @@ package com.utils
 		
 		private static function init():void{
 			if(!_inited){
-				//Flurry.startSession("MRGRZM7YSBQK5FQ3FFVC");
+				try{
+				Flurry.getInstance().setIOSAPIKey("PYPGBZP7VD9YYMMTWYDW");
+				Flurry.getInstance().setAppVersion(Session.VERSION);
+				Flurry.getInstance().startSession();
+				//PYPGBZP7VD9YYMMTWYDW  arabic
+				}catch(e:Error){}
 			}
 			_inited = true;
 		}
@@ -19,7 +26,7 @@ package com.utils
 		public static function logEvent(category:String,action:String,value:int=-100):void{
 			init();
 			try{
-				//Flurry.logEvent(category+"_"+action,{param:value});
+				Flurry.getInstance().logEvent(category+"_"+action,{param:value});
 			}catch(e:Error){}
 		}
 		
@@ -27,7 +34,7 @@ package com.utils
 			
 			init();
 			try{
-				//Flurry.logError(errorId,description);
+				Flurry.getInstance().logError(errorId,description);
 			}catch(e:Error){}
 		}
 		

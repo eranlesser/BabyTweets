@@ -13,6 +13,7 @@ package com.model
 
 	public class Session
 	{
+		public static var VERSION:String = "2.0"
 		public static var currentScreen:int=0;
 		public static const FREE_THUMBS_COUNT:uint=4;
 		public static var changed:Signal = new Signal();
@@ -21,8 +22,9 @@ package com.model
 		public static var IS_RETINA:Boolean = false;
 		private static var _lang:String;
 		private static var _fullVersionEnabled:Boolean = false;
-		public static const inAppFullVersionId:String = "babyTweetsEn.fullVersion";
+		//public static const inAppFullVersionId:String = "babyTweetsEn.fullVersion";
 		//public static const inAppFullVersionId:String = "babyTweetsHeb.fullVersion";
+		public static const inAppFullVersionId:String = "com.babytweets.inapp.ar"
 		public static var deviceId:uint=2; // phone 1 , tablet 2
 		public function Session()
 		{
@@ -43,8 +45,7 @@ package com.model
 		
 		public static function get fullVersionEnabled():Boolean
 		{
-			//**********************
-			return false;//_fullVersionEnabled;
+			return _fullVersionEnabled;
 		}
 
 		

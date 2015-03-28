@@ -41,8 +41,8 @@ package com.utils
 		public function InApper()
 		{
 			productStore=new ProductStore();
-			Monotorizer.logEvent("productstore supported",ProductStore.isSupported.toString());
-			Monotorizer.logEvent("productstore available",productStore.available.toString());
+			//Monotorizer.logEvent("productstore supported",ProductStore.isSupported.toString());
+			//Monotorizer.logEvent("productstore available",productStore.available.toString());
 			get_Product();
 		}
 		

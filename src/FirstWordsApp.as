@@ -12,7 +12,7 @@ package
 	
 	public class FirstWordsApp extends Sprite
 	{
-		[Embed(source="assets/logo.png")]
+		[Embed(source="assets/splash.jpg")]
 		private var logo : Class;
 		private var _logo:Image;
 		public var screensLayer:Sprite;
